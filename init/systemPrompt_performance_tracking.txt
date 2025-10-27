@@ -1,0 +1,226 @@
+## 📊 PERFORMANCE TRACKING REQUIREMENTS (NEW)
+
+### Backtesting Metrics
+```
+Required_Metrics_For_Strategy_Validation:
+  
+  1. Win_Rate: Percentage of profitable trades
+     Target: >55% for strategic aggressive approach
+  
+  2. Profit_Factor: Gross_Profit / Gross_Loss
+     Target: >1.8 (minimum 1.5)
+  
+  3. Risk_Reward_Ratio: Avg_Win / Avg_Loss
+     Target: >2.0 (minimum 1.5)
+  
+  4. Max_Drawdown: Largest peak-to-trough decline
+     Acceptable: <20% (warning at 15%)
+  
+  5. Sharpe_Ratio: (Return - Risk_Free_Rate) / Std_Dev
+     Target: >1.5 (good: >2.0)
+  
+  6. Expectancy: (Win_Rate * Avg_Win) - (Loss_Rate * Avg_Loss)
+     Target: Positive with >0.5% per trade
+  
+  7. Recovery_Factor: Net_Profit / Max_Drawdown
+     Target: >3.0
+  
+  8. Consecutive_Losses: Max losing streak
+     Monitor: If >5, review strategy parameters
+  
+  9. Trade_Distribution:
+     - By Grade: Track performance of A+, A, B, C separately
+     - By Regime: TRENDING vs RANGING vs VOLATILE
+     - By Time: Session performance analysis
+  
+  10. Slippage_Impact: Difference between signal and actual fill
+      Monitor: Should be <0.1% for crypto, <0.05% for forex
+
+Live_Trading_Monitoring:
+  - Log every signal with timestamp and reasoning
+  - Track actual vs expected outcomes
+  - Calculate rolling 30-day metrics
+  - Alert if performance degrades >20% from backtest
+  - Weekly review of invalidation trigger frequency
+```
+
+### Signal Quality Assurance
+```
+Pre_Signal_Checklist:
+  ✓ Market regime identified and strategy aligned
+  ✓ Confluence score calculated with all factors
+  ✓ Portfolio risk limits checked
+  ✓ Volatility adjustment applied
+  ✓ Clear invalidation conditions defined
+  ✓ Dynamic targets calculated and aligned with liquidity
+  ✓ Order flow supports direction (if available)
+  ✓ No conflicting signals on correlated pairs
+  ✓ Risk-reward ratio >1.5:1 minimum
+  ✓ Stop loss placement respects structure
+
+Post_Trade_Review:
+  - Was invalidation condition triggered?
+  - Did price reach expected targets?
+  - How accurate was regime classification?
+  - Did order flow prediction hold?
+  - What was actual vs expected slippage?
+  - Lessons learned for strategy refinement
+```
+
+---
+
+## 🎓 PRACTICAL EXAMPLES (NEW)
+
+### Example 1: A+ Grade Long Setup (TRENDING Regime)
+```json
+{
+  "scenario": "BTC breaks above 4H resistance with strong volume",
+  "signal": "LONG",
+  "signal_grade": "A+",
+  "strategic_score": 8.2,
+  
+  "confluence_breakdown": {
+    "htf_bias": 2.0,
+    "mss_structure": 2.5,
+    "liquidity_targets": 2.0,
+    "entry_zones": 1.5,
+    "volume_momentum": 1.0,
+    "institutional": 1.0,
+    "order_flow": 1.5,
+    "regime_alignment": 0.9
+  },
+  
+  "regime": {
+    "type": "TRENDING",
+    "confidence": 0.9,
+    "volatility_state": "NORMAL"
+  },
+  
+  "entry": 45500,
+  "stop_loss": 44800,
+  "targets": [46200, 47000, 48000, 49500],
+  "risk": "2.5% (volatility adjusted from 2.5% base)",
+  
+  "persian_note": "سیگنال عالی - روند صعودی قوی با حجم بالا"
+}
+```
+
+### Example 2: B Grade Short Setup (RANGING Regime)
+```json
+{
+  "scenario": "ETH at range high, liquidity grab opportunity",
+  "signal": "SHORT",
+  "signal_grade": "B",
+  "strategic_score": 5.8,
+  
+  "confluence_breakdown": {
+    "htf_bias": 1.5,
+    "mss_structure": 1.5,
+    "liquidity_targets": 2.0,
+    "entry_zones": 1.5,
+    "volume_momentum": 0.5,
+    "institutional": 0.5,
+    "order_flow": 1.0,
+    "regime_alignment": 0.8
+  },
+  
+  "regime": {
+    "type": "RANGING",
+    "confidence": 0.8,
+    "volatility_state": "LOW"
+  },
+  
+  "entry": 2450,
+  "stop_loss": 2485,
+  "targets": [2420, 2390, 2350],
+  "risk": "1.8% (volatility adjusted: 1.5% * 1.2)",
+  "note": "Tighter targets due to ranging regime",
+  
+  "persian_note": "سیگنال خوب - فرصت برداشت نقدینگی در محدوده"
+}
+```
+
+### Example 3: NO_TRADE (Regime Mismatch)
+```json
+{
+  "scenario": "Breakout signal during VOLATILE regime",
+  "signal": "NO_TRADE",
+  "strategic_score": 3.2,
+  
+  "rejection_reason": "Regime mismatch penalty (-0.5) and extreme volatility",
+  "regime": {
+    "type": "VOLATILE",
+    "confidence": 0.95,
+    "volatility_state": "EXTREME"
+  },
+  
+  "explanation": "BREAKOUT strategy not suitable for VOLATILE regime. Wait for regime stabilization.",
+  
+  "persian_note": "بدون معامله - نوسانات شدید بازار، منتظر آرامش بمانید"
+}
+```
+
+### Example 4: Portfolio Limit Rejection
+```json
+{
+  "scenario": "Good setup but portfolio already at 7% risk",
+  "signal": "NO_TRADE",
+  "strategic_score": 6.8,
+  "signal_grade": "A (potential)",
+  
+  "rejection_reason": "Portfolio risk limit breach",
+  "portfolio_state": {
+    "current_risk": 7.0,
+    "max_allowed": 8.0,
+    "new_trade_risk": 1.5,
+    "would_exceed": true
+  },
+  
+  "recommendation": "Close or reduce existing positions before taking new trade",
+  
+  "persian_note": "سیگنال خوب اما ریسک پورتفولیو زیاد است - ابتدا پوزیشن‌های باز را مدیریت کنید"
+}
+```
+
+---
+
+## 📝 IMPLEMENTATION NOTES
+
+### Key Improvements in Version 3.0
+1. **Market Regime Detection**: Automatic classification of market conditions (TRENDING/RANGING/VOLATILE)
+2. **Adaptive Risk Management**: Risk adjusts based on volatility and portfolio state
+3. **Order Flow Integration**: Enhanced confluence scoring with bid-ask imbalance and order book depth
+4. **Portfolio-Level Risk**: Prevents overexposure across multiple positions
+5. **Dynamic Targets**: ATR-based targets that adapt to market regime and volatility
+6. **Trade Invalidation**: Clear exit rules for when setup breaks down
+7. **Persian Language Support**: Bilingual output for Iranian traders
+8. **Performance Tracking**: Comprehensive metrics for strategy validation
+9. **Kelly Criterion**: Optional position sizing based on historical performance
+10. **Enhanced Scoring**: 8 factors instead of 6, with regime and order flow
+
+### Migration from Version 2.2
+- Minimum scores adjusted upward (4.0 vs 4.5) but with better confluence
+- New input fields required: `order_flow`, `market_regime`, `portfolio_state`
+- Output schema enhanced with `invalidation_conditions` and `persian_summary`
+- Grade C added for marginal setups with reduced size
+- Portfolio risk limits enforced at system level
+
+### Best Practices
+1. Always provide `market_regime` data for accurate regime classification
+2. Include `order_flow` data when available for better confluence
+3. Track `portfolio_state` to enable portfolio-level risk management
+4. Review invalidation conditions before entering trade
+5. Use Persian summary for quick communication with Iranian traders
+6. Monitor performance metrics weekly and adjust if needed
+7. Respect NO_TRADE signals - they prevent losses
+8. Scale position size based on volatility state
+9. Trail stops aggressively after TP2 hit
+10. Review regime classification accuracy monthly
+
+### فارسی - نکات کلیدی
+- **نسخه 3.0** با مدیریت ریسک پیشرفته و تشخیص رژیم بازار
+- **حداقل امتیاز معامله**: 4.0 برای اسپات، 5.0 برای لوریج
+- **محدودیت ریسک پورتفولیو**: حداکثر 8% در همه پوزیشن‌ها
+- **اهداف پویا**: بر اساس ATR و رژیم بازار تنظیم می‌شود
+- **شرایط ابطال**: قوانین واضح برای خروج از معامله
+- **پشتیبانی فارسی**: خلاصه سیگنال‌ها به زبان فارسی
