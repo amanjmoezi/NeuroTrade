@@ -10,8 +10,18 @@ class MessageFormatters:
     """Format trading signals for Telegram messages"""
     
     @staticmethod
+    def _escape_html(text: str) -> str:
+        """Escape HTML special characters for Telegram"""
+        if not text:
+            return ""
+        return str(text).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+    
+    @staticmethod
     def _format_price(price: float) -> str:
         """فرمت هوشمند قیمت بر اساس مقدار"""
+        # Handle None or invalid values
+        if price is None or not isinstance(price, (int, float)):
+            return "$0.00"
         if price == 0:
             return "$0.00"
         elif price < 0.00001:
@@ -221,7 +231,7 @@ class MessageFormatters:
             htf = ctx['htf_bias']
             msg += f"<b>گرایش HTF:</b> {htf.get('direction', 'N/A')} ({htf.get('strength', 'N/A')}) - وزن: {htf.get('weight', 0)}\n"
         
-        msg += f"<b>محرک اصلی:</b> {ctx.get('primary_driver', 'N/A')}\n"
+        msg += f"<b>محرک اصلی:</b> {MessageFormatters._escape_html(ctx.get('primary_driver', 'N/A'))}\n"
         
         if 'liquidity_targets' in ctx and ctx['liquidity_targets']:
             msg += f"\n<b>🎯 اهداف نقدینگی:</b>\n"
@@ -232,10 +242,10 @@ class MessageFormatters:
         if 'strategic_advantage' in ctx:
             adv = ctx['strategic_advantage']
             msg += f"\n<b>💪 مزیت استراتژیک:</b>\n"
-            msg += f"• قدرت کلیدی: {adv.get('key_strength', 'N/A')}\n"
+            msg += f"• قدرت کلیدی: {MessageFormatters._escape_html(adv.get('key_strength', 'N/A'))}\n"
             if 'compromises' in adv and adv['compromises']:
-                msg += f"• معایب: {', '.join(adv['compromises'])}\n"
-            msg += f"• قابلیت کلی: {adv.get('overall_viability', 'N/A')}\n"
+                msg += f"• معایب: {MessageFormatters._escape_html(', '.join(adv['compromises']))}\n"
+            msg += f"• قابلیت کلی: {MessageFormatters._escape_html(adv.get('overall_viability', 'N/A'))}\n"
         
         return msg
     
@@ -245,9 +255,9 @@ class MessageFormatters:
 ━━━━━━━━━━━━━━━━━━━━━━
 <b>💼 جزئیات پوزیشن</b>
 
-<b>نوع:</b> {pos.get('type', 'N/A')}
+<b>نوع:</b> {MessageFormatters._escape_html(pos.get('type', 'N/A'))}
 <b>لوریج:</b> {pos.get('leverage', 1)}x
-<b>استراتژی ورود:</b> {pos.get('entry_strategy', 'N/A')}
+<b>استراتژی ورود:</b> {MessageFormatters._escape_html(pos.get('entry_strategy', 'N/A'))}
 """
         
         if 'entry_zone' in pos:
@@ -256,7 +266,7 @@ class MessageFormatters:
             msg += f"• بهینه: {MessageFormatters._format_price(entry.get('optimal', 0))}\n"
             if 'acceptable' in entry and entry['acceptable']:
                 msg += f"• محدوده قابل قبول: {MessageFormatters._format_price(entry['acceptable'][0])} - {MessageFormatters._format_price(entry['acceptable'][1])}\n"
-            msg += f"• نوع ناحیه: {entry.get('zone_type', 'N/A')}\n"
+            msg += f"• نوع ناحیه: {MessageFormatters._escape_html(entry.get('zone_type', 'N/A'))}\n"
         
         if 'stop_loss' in pos:
             sl = pos['stop_loss']
@@ -264,7 +274,7 @@ class MessageFormatters:
             msg += f"• قیمت: {MessageFormatters._format_price(sl.get('price', 0))}\n"
             msg += f"• فاصله: {sl.get('distance_percent', 0)}%\n"
             if 'reasoning' in sl:
-                reasoning = sl['reasoning'][:100].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+                reasoning = MessageFormatters._escape_html(sl['reasoning'][:100])
                 msg += f"• دلیل: {reasoning}\n"
         
         if 'take_profit' in pos:
@@ -283,7 +293,7 @@ class MessageFormatters:
                         if percentage > 0:
                             msg += f" ({percentage}%)"
                         if reasoning:
-                            reasoning_short = reasoning[:60].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+                            reasoning_short = MessageFormatters._escape_html(reasoning[:60])
                             msg += f" - {reasoning_short}"
                         msg += "\n"
             
@@ -327,13 +337,15 @@ class MessageFormatters:
             msg += f"• همبستگی: {portfolio.get('position_correlation', 'N/A')}\n"
         
         if 'key_strengths' in risk and risk['key_strengths']:
-            msg += f"\n<b>✅ نقاط قوت:</b> {', '.join(risk['key_strengths'][:3])}\n"
+            strengths = MessageFormatters._escape_html(', '.join(risk['key_strengths'][:3]))
+            msg += f"\n<b>✅ نقاط قوت:</b> {strengths}\n"
         
         if 'acknowledged_weaknesses' in risk and risk['acknowledged_weaknesses']:
-            msg += f"<b>⚠️ نقاط ضعف:</b> {', '.join(risk['acknowledged_weaknesses'][:3])}\n"
+            weaknesses = MessageFormatters._escape_html(', '.join(risk['acknowledged_weaknesses'][:3]))
+            msg += f"<b>⚠️ نقاط ضعف:</b> {weaknesses}\n"
         
         if 'strategic_rationale' in risk:
-            rationale = risk['strategic_rationale'][:150].replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+            rationale = MessageFormatters._escape_html(risk['strategic_rationale'][:150])
             msg += f"\n<b>💡 منطق استراتژیک:</b>\n{rationale}\n"
         
         return msg
@@ -348,7 +360,7 @@ class MessageFormatters:
         if 'structure_break' in inv:
             sb = inv['structure_break']
             msg += f"<b>شکست ساختار:</b> {MessageFormatters._format_price(sb.get('price_level', 0))}\n"
-            msg += f"• {sb.get('description', 'N/A')}\n"
+            msg += f"• {MessageFormatters._escape_html(sb.get('description', 'N/A'))}\n"
         
         if 'time_limit' in inv:
             msg += f"<b>محدودیت زمانی:</b> {inv['time_limit']}\n"
@@ -400,16 +412,16 @@ class MessageFormatters:
 ━━━━━━━━━━━━━━━━━━━━━━
 <b>📝 خلاصه فارسی</b>
 
-<b>سیگنال:</b> {ps.get('signal', 'N/A')}
-<b>درجه:</b> {ps.get('grade', 'N/A')}
-<b>ورود:</b> {ps.get('entry', 'N/A')}
-<b>حد ضرر:</b> {ps.get('stop_loss', 'N/A')}
-<b>اهداف:</b> {ps.get('targets', 'N/A')}
-<b>ریسک:</b> {ps.get('risk', 'N/A')}
+<b>سیگنال:</b> {MessageFormatters._escape_html(ps.get('signal', 'N/A'))}
+<b>درجه:</b> {MessageFormatters._escape_html(ps.get('grade', 'N/A'))}
+<b>ورود:</b> {MessageFormatters._escape_html(ps.get('entry', 'N/A'))}
+<b>حد ضرر:</b> {MessageFormatters._escape_html(ps.get('stop_loss', 'N/A'))}
+<b>اهداف:</b> {MessageFormatters._escape_html(ps.get('targets', 'N/A'))}
+<b>ریسک:</b> {MessageFormatters._escape_html(ps.get('risk', 'N/A'))}
 
-<b>دلیل:</b> {ps.get('reasoning', 'N/A')}
+<b>دلیل:</b> {MessageFormatters._escape_html(ps.get('reasoning', 'N/A'))}
 """
         if 'warning' in ps and ps['warning']:
-            msg += f"\n<b>⚠️ {ps['warning']}</b>\n"
+            msg += f"\n<b>⚠️ {MessageFormatters._escape_html(ps['warning'])}</b>\n"
         
         return msg

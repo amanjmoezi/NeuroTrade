@@ -3,6 +3,7 @@ AI Trading Advisor - OpenAI Integration
 """
 import os
 import json
+import re
 from typing import Dict
 from openai import AsyncOpenAI
 from src.core.config import Config
@@ -28,6 +29,36 @@ class AITradingAdvisor:
                 print("✅ SYSTEM PROMPT LOADED")
                 return f.read()
         return "You are an ICT trading expert."
+    
+    def _clean_json_response(self, content: str) -> str:
+        """Clean AI response by removing markdown code blocks and extra formatting"""
+        if not content:
+            return content
+        
+        original = content
+        
+        # Remove markdown code blocks (```json ... ``` or ``` ... ```)
+        content = re.sub(r'^```(?:json)?\s*\n', '', content.strip(), flags=re.MULTILINE)
+        content = re.sub(r'\n```\s*$', '', content.strip(), flags=re.MULTILINE)
+        
+        # Remove any leading/trailing whitespace
+        content = content.strip()
+        
+        # Try to extract just the JSON object if there's text before/after
+        # Look for the first { and last }
+        first_brace = content.find('{')
+        last_brace = content.rfind('}')
+        
+        if first_brace != -1 and last_brace != -1 and first_brace < last_brace:
+            # Check if there's significant text before the JSON
+            before_json = content[:first_brace].strip()
+            after_json = content[last_brace+1:].strip()
+            
+            if before_json or after_json:
+                print(f"⚠️ Found extra text around JSON (before: {len(before_json)} chars, after: {len(after_json)} chars)")
+                content = content[first_brace:last_brace+1]
+        
+        return content
     
     async def get_signal(self, market_data: Dict) -> Dict:
         """Get Trading Signal from AI"""
@@ -70,6 +101,14 @@ class AITradingAdvisor:
                     "user_message": "❌ خطا در دریافت سیگنال از هوش مصنوعی. لطفاً دوباره تلاش کنید."
                 }
             
+            # Clean the response to remove markdown code blocks
+            original_content = content
+            content = self._clean_json_response(content)
+            
+            # Log if cleaning was necessary
+            if original_content != content:
+                print("🧹 Cleaned markdown formatting from AI response")
+            
             try:
                 response = json.loads(content)
                 
@@ -90,7 +129,26 @@ class AITradingAdvisor:
             except json.JSONDecodeError as je:
                 error_msg = f"خطا در تجزیه پاسخ JSON: {str(je)}"
                 print(f"🔴 {error_msg}")
-                print(f"Response content: {content[:200]}")
+                print(f"🔍 Full response content (first 500 chars):\n{content[:500]}")
+                print(f"🔍 Full response content (last 200 chars):\n{content[-200:]}")
+                print(f"🔍 Response length: {len(content)} characters")
+                
+                # Try to extract the first valid JSON object if there's extra data
+                try:
+                    # Find the first complete JSON object
+                    decoder = json.JSONDecoder()
+                    response, idx = decoder.raw_decode(content)
+                    
+                    remaining = content[idx:].strip()
+                    if remaining:
+                        print(f"⚠️ Found extra data after JSON: {remaining[:100]}")
+                    
+                    print("✅ Successfully extracted first JSON object")
+                    return response
+                    
+                except Exception as e2:
+                    print(f"🔴 Failed to extract JSON: {str(e2)}")
+                
                 return {
                     "error": error_msg,
                     "error_type": "JSON_PARSE_ERROR",

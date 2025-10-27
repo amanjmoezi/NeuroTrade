@@ -4,6 +4,7 @@ Modular version with clean architecture
 """
 import os
 import logging
+from telegram import Update
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 from dotenv import load_dotenv
 from src.bot.handlers import CommandHandlers
@@ -80,5 +81,4 @@ def main():
 
 
 if __name__ == "__main__":
-    from telegram import Update
     main()

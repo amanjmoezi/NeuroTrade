@@ -14,6 +14,9 @@ openai==1.6.1
 # Telegram Bot
 python-telegram-bot==20.7
 
+# Internationalization (i18n)
+Babel==2.13.1
+
 # Visualization
 matplotlib==3.8.2
 

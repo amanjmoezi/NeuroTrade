@@ -9,6 +9,7 @@ from telegram.constants import ParseMode
 from src.bot.formatters import MessageFormatters
 from src.bot.charts import ChartGenerator
 from src.bot.state import BotStateManager, PriceAlert
+from src.bot.i18n import t, get_i18n
 from src.trading.system import TradingSystem
 from src.core.config import Config
 from src.database.repositories import AnalysisHistoryRepository
@@ -28,6 +29,14 @@ class CommandHandlers:
         # Track running tasks
         self.running_tasks = set()
     
+    @staticmethod
+    def _safe_float(value, default=0):
+        """Safely convert value to float, handling str and None"""
+        try:
+            return float(value) if value else default
+        except (ValueError, TypeError):
+            return default
+    
     async def initialize(self):
         """Initialize database connection and repositories"""
         await self.state_manager.initialize()
@@ -44,67 +53,69 @@ class CommandHandlers:
     async def start_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle /start command"""
         user = update.effective_user
+        user_id = user.id
+        
+        # Get user's language preference
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
+        
         welcome_msg = f"""
-🤖 <b>به ربات تحلیل ICT خوش آمدید!</b> 🚀
+{t('welcome_title', lang)}
 
-سلام {user.first_name}! من دستیار پیشرفته معاملات کریپتو شما هستم.
+{t('welcome_greeting', lang, name=user.first_name)}
 
-<b>🎯 امکانات:</b>
-• 🧠 تحلیل هوشمند و انتخاب خودکار بهترین ارز
-• تحلیل ICT لحظه‌ای
-• مفاهیم Smart Money
-• هشدار قیمت
-• سیگنال‌های معاملاتی
-• نمودارهای زیبا
-• تاریخچه تحلیل‌ها
+{t('welcome_features_title', lang)}
+{t('welcome_features', lang)}
 
-<b>📊 دستورات سریع:</b>
-/smartanalyze - 🧠 تحلیل هوشمند (جدید!)
-/analyze - تحلیل ارز دیجیتال
-/analyses - تاریخچه تحلیل‌ها
-/market - بررسی کلی بازار
-/help - لیست کامل دستورات
+{t('welcome_commands_title', lang)}
+/smartanalyze - {t('cmd_smartanalyze', lang)}
+/analyze - {t('cmd_analyze', lang)}
+/analyses - {t('cmd_analyses', lang)}
+/market - {t('cmd_market', lang)}
+/help - {t('cmd_help', lang)}
 
-آماده‌اید؟ دستور /smartanalyze را امتحان کنید! 🧠📈
+{t('welcome_ready', lang)}
         """
-        keyboard = [[KeyboardButton("🧠 تحلیل هوشمند"), KeyboardButton("🔍 تحلیل ارز")],
-                    [KeyboardButton("🌍 بررسی بازار"), KeyboardButton("📊 تاریخچه تحلیل")],
-                    [KeyboardButton("⚡ هشدارهای من"), KeyboardButton("⚙️ تنظیمات")]]
+        keyboard = [[KeyboardButton(t('btn_smart_analysis', lang)), KeyboardButton(t('btn_analyze_coin', lang))],
+                    [KeyboardButton(t('btn_market_overview', lang)), KeyboardButton(t('btn_analysis_history', lang))],
+                    [KeyboardButton(t('btn_my_alerts', lang)), KeyboardButton(t('btn_settings', lang))]]
         reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
         await update.message.reply_text(welcome_msg, parse_mode=ParseMode.HTML, reply_markup=reply_markup)
     
     async def help_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle /help command"""
-        help_text = """
-📚 <b>راهنمای دستورات</b>
+        user_id = update.effective_user.id
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
+        
+        help_text = f"""
+{t('help_title', lang)}
 
-<b>تحلیل:</b>
-/analyze - انتخاب و تحلیل ارز
-/smartanalyze - 🧠 تحلیل هوشمند و انتخاب بهترین ارز
-/market - بررسی کلی بازار
-/topmovers - برترین تغییرات قیمت
+{t('help_analysis_section', lang)}
 
-<b>تحلیل‌ها:</b>
-/analyses - تاریخچه تحلیل‌های شما
+{t('help_history_section', lang)}
 
-<b>هشدارها:</b>
-/alerts - مشاهده هشدارها
-/setalert [نماد] [قیمت] - تنظیم هشدار
+{t('help_alerts_section', lang)}
 
-<b>تنظیمات:</b>
-/settings - تنظیمات
-/status - وضعیت سیستم
+{t('help_settings_section', lang)}
 
-نیاز به کمک دارید؟ فقط بپرسید! 💬
+{t('help_need_help', lang)}
         """
         await update.message.reply_text(help_text, parse_mode=ParseMode.HTML)
     
     async def analyze_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle /analyze command"""
+        user_id = update.effective_user.id
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
+        
         popular_cryptos = [
             "BTC", "ETH", "BNB", "XRP", "ADA", "DOGE", "SOL", "TRX", "DOT", "MATIC",
             "LTC", "SHIB", "AVAX", "UNI", "LINK", "ATOM", "XLM", "ETC", "BCH", "FIL",
-            "APT", "ARB", "OP", "NEAR", "INJ", "SUI", "PEPE", "FTM", "ALGO", "VET"
+            "APT", "ARB", "OP", "NEAR", "INJ", "SUI", "PEPE", "FTM", "ALGO", "VET",
+            "HBAR", "QNT", "IMX", "AAVE", "GRT", "SAND", "MANA", "AXS", "THETA", "XTZ",
+            "EOS", "RUNE", "FLR", "EGLD", "KAVA", "ZIL", "ENJ", "CHZ", "BAT", "ZRX",
+            "CRV", "COMP", "SNX", "MKR", "SUSHI", "YFI", "1INCH", "LDO", "RPL", "BLUR"
         ]
         
         keyboard = []
@@ -116,7 +127,7 @@ class CommandHandlers:
         
         reply_markup = InlineKeyboardMarkup(keyboard)
         await update.message.reply_text(
-            "📊 <b>لطفاً یک ارز دیجیتال را انتخاب کنید:</b>",
+            t('select_crypto', lang),
             parse_mode=ParseMode.HTML,
             reply_markup=reply_markup
         )
@@ -124,18 +135,27 @@ class CommandHandlers:
     async def perform_analysis(self, update: Update, symbol: str, query=None):
         """Perform analysis for a symbol - runs in background"""
         if query:
-            msg = await query.message.reply_text(f"🔄 در حال تحلیل {symbol}...\n⏳ دریافت اطلاعات...\n\n💡 می‌توانید از دستورات دیگر استفاده کنید")
-            message_obj = query.message
             user_id = query.from_user.id
+            message_obj = query.message
         else:
-            msg = await update.message.reply_text(f"🔄 در حال تحلیل {symbol}...\n⏳ دریافت اطلاعات...\n\n💡 می‌توانید از دستورات دیگر استفاده کنید")
-            message_obj = update.message
             user_id = update.effective_user.id
+            message_obj = update.message
+        
+        # Get user's language
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
+        
+        analysis_msg = f"{t('analyzing', lang, symbol=symbol)}\n{t('fetching_data', lang)}\n\n{t('can_use_other_commands', lang)}"
+        
+        if query:
+            msg = await query.message.reply_text(analysis_msg)
+        else:
+            msg = await update.message.reply_text(analysis_msg)
         
         # Run analysis in background
-        self._run_in_background(self._perform_analysis_background(msg, message_obj, user_id, symbol))
+        self._run_in_background(self._perform_analysis_background(msg, message_obj, user_id, symbol, lang))
     
-    async def _refresh_analysis_background(self, msg, message_obj, symbol: str):
+    async def _refresh_analysis_background(self, msg, message_obj, symbol: str, lang: str = 'fa'):
         """Background task for refreshing analysis"""
         try:
             result = await self.trading_system.analyze(symbol)
@@ -143,12 +163,13 @@ class CommandHandlers:
             await msg.delete()
             await message_obj.reply_text(signal_msg, parse_mode=ParseMode.HTML)
         except Exception as e:
+            error_msg = t('error_refresh_symbol', lang, symbol=symbol, error=str(e))
             try:
-                await msg.edit_text(f"❌ خطا در بروزرسانی {symbol}\nخطا: {str(e)}")
+                await msg.edit_text(error_msg)
             except:
-                await message_obj.reply_text(f"❌ خطا در بروزرسانی {symbol}\nخطا: {str(e)}")
+                await message_obj.reply_text(error_msg)
     
-    async def _perform_analysis_background(self, msg, message_obj, user_id: int, symbol: str):
+    async def _perform_analysis_background(self, msg, message_obj, user_id: int, symbol: str, lang: str):
         """Background task for performing analysis"""
         try:
             result = await self.trading_system.analyze(symbol)
@@ -156,14 +177,14 @@ class CommandHandlers:
             # Check for errors in market data
             market_data = result.get('market_data', {})
             if 'error' in market_data:
-                error_msg = market_data.get('user_message', market_data.get('error', 'خطای نامشخص'))
+                error_msg = market_data.get('user_message', market_data.get('error', t('error_unknown', lang)))
                 await msg.edit_text(f"❌ {error_msg}")
                 return
             
             # Check for errors in signal
             signal = result.get('signal', {})
             if 'error' in signal:
-                error_msg = signal.get('user_message', signal.get('error', 'خطای نامشخص'))
+                error_msg = signal.get('user_message', signal.get('error', t('error_unknown', lang)))
                 await msg.edit_text(f"❌ {error_msg}")
                 return
             
@@ -172,7 +193,7 @@ class CommandHandlers:
             thinking_reason = signal.get('thinking_reason', '')
             
             if deep_thinking_used:
-                await msg.edit_text(f"🧠 {thinking_reason}\n⏳ در حال تحلیل عمیق...")
+                await msg.edit_text(t('deep_thinking', lang, reason=thinking_reason))
             
             signal_msg_full = self.formatters.format_signal_detailed(result['market_data'], result['signal'])
             chart = self.chart_generator.create_price_chart(result['market_data'], result['signal'])
@@ -220,7 +241,7 @@ class CommandHandlers:
                         # Get reasoning from context or persian_summary
                         context = signal.get('context', {})
                         persian_summary = signal.get('persian_summary', {})
-                        reasoning = persian_summary.get('reasoning', context.get('primary_driver', 'تحلیل ICT'))
+                        reasoning = persian_summary.get('reasoning', context.get('primary_driver', t('ict_analysis', lang)))
                         
                         analysis_data = {
                             'user_id': user_id,
@@ -251,7 +272,7 @@ class CommandHandlers:
             
             # Add deep thinking badge if used
             if deep_thinking_used:
-                thinking_badge = "\n\n🧠 <b>تحلیل عمیق استفاده شد</b>\n<i>" + thinking_reason + "</i>"
+                thinking_badge = t('deep_thinking_badge', lang, reason=thinking_reason)
                 signal_msg_full += thinking_badge
             
             if chart:
@@ -263,18 +284,18 @@ class CommandHandlers:
                 await message_obj.reply_text(signal_msg_full, parse_mode=ParseMode.HTML)
             await msg.delete()
             
-            keyboard = [[InlineKeyboardButton("🔔 تنظیم هشدار", callback_data=f"alert_{symbol}"),
-                        InlineKeyboardButton("🔄 بروزرسانی", callback_data=f"refresh_{symbol}")]]
+            keyboard = [[InlineKeyboardButton(t('btn_set_alert', lang), callback_data=f"alert_{symbol}"),
+                        InlineKeyboardButton(t('btn_refresh', lang), callback_data=f"refresh_{symbol}")]]
             reply_markup = InlineKeyboardMarkup(keyboard)
-            await message_obj.reply_text("چه کاری می‌خواهید انجام دهید؟", reply_markup=reply_markup)
+            await message_obj.reply_text(t('what_to_do', lang), reply_markup=reply_markup)
         except Exception as e:
-            error_text = f"❌ خطا در تحلیل {symbol}\n\n"
+            error_text = t('error_analysis', lang, symbol=symbol) + "\n\n"
             if "timeout" in str(e).lower():
-                error_text += "⏱ زمان انتظار تمام شد. لطفاً دوباره تلاش کنید."
+                error_text += t('error_timeout', lang)
             elif "connection" in str(e).lower():
-                error_text += "🌐 خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید."
+                error_text += t('error_connection', lang)
             else:
-                error_text += f"خطا: {str(e)}"
+                error_text += f"{t('error', lang)}: {str(e)}"
             
             try:
                 await msg.edit_text(error_text)
@@ -284,24 +305,29 @@ class CommandHandlers:
     async def alerts_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle /alerts command"""
         user_id = update.effective_user.id
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
         alerts = await self.state_manager.get_user_alerts(user_id)
         
         if not alerts:
-            msg = "⚡ <b>هشدارهای قیمت شما</b>\n\nهشدار فعالی وجود ندارد.\nاز دستور /setalert [نماد] [قیمت] استفاده کنید"
+            msg = f"{t('alerts_title', lang)}\n\n{t('no_alerts', lang)}"
         else:
-            msg = "⚡ <b>هشدارهای فعال</b>\n\n"
+            msg = f"{t('active_alerts', lang)}\n\n"
             for alert in alerts:
-                condition_fa = 'بالاتر از' if alert.condition == 'above' else 'پایین‌تر از'
-                msg += f"• {alert.symbol}: ${alert.target_price:,.2f} ({condition_fa})\n"
-            msg += f"\n📊 مجموع: {len(alerts)} هشدار"
+                condition_text = t('condition_above', lang) if alert.condition == 'above' else t('condition_below', lang)
+                msg += f"• {alert.symbol}: ${alert.target_price:,.2f} ({condition_text})\n"
+            msg += f"\n{t('total_alerts', lang, count=len(alerts))}"
         
         await update.message.reply_text(msg, parse_mode=ParseMode.HTML)
     
     async def setalert_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle /setalert command"""
         user_id = update.effective_user.id
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
+        
         if len(context.args) < 2:
-            await update.message.reply_text("⚡ نحوه استفاده: /setalert [نماد] [قیمت]\nمثال: /setalert BTC 50000")
+            await update.message.reply_text(t('alert_usage', lang))
             return
         
         symbol = context.args[0].upper()
@@ -312,181 +338,196 @@ class CommandHandlers:
             target_price = float(context.args[1])
             current_price = await self.trading_system.provider.get_current_price(symbol)
             condition = "above" if target_price > current_price else "below"
-            condition_fa = "بالاتر از" if condition == "above" else "پایین‌تر از"
+            condition_text = t('condition_above', lang) if condition == "above" else t('condition_below', lang)
             
             alert = PriceAlert(user_id=user_id, symbol=symbol, target_price=target_price, 
                              condition=condition, created_at=datetime.now(timezone.utc).isoformat())
             await self.state_manager.add_alert(alert)
             
             await update.message.reply_text(
-                f"✅ هشدار تنظیم شد!\n\nنماد: {symbol}\nهدف: ${target_price:,.2f}\n"
-                f"قیمت فعلی: ${current_price:,.2f}\nشرط: {condition_fa}\n\nبه شما اطلاع می‌دهم! 🔔"
+                f"{t('alert_set', lang)}\n\n{t('symbol', lang)}: {symbol}\n{t('target', lang)}: ${target_price:,.2f}\n"
+                f"{t('current_price', lang).replace('<b>', '').replace('</b>', '').replace('💰 ', '')}: ${current_price:,.2f}\n"
+                f"{t('condition_above' if condition == 'above' else 'condition_below', lang).capitalize()}: {condition_text}\n\n{t('will_notify', lang)}"
             )
         except ValueError:
-            await update.message.reply_text("❌ قیمت نامعتبر است.")
+            await update.message.reply_text(t('invalid_price', lang))
         except Exception as e:
-            await update.message.reply_text(f"❌ خطا: {str(e)}")
+            await update.message.reply_text(f"{t('error', lang)}: {str(e)}")
     
     async def settings_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle /settings command"""
         user_id = update.effective_user.id
         settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
+        i18n = get_i18n()
+        
+        notifications_status = t('enabled', lang) if settings.notifications else t('disabled', lang)
+        lang_display = f"{i18n.get_language_flag(settings.language)} {i18n.get_language_name(settings.language)}"
         
         msg = f"""
-⚙️ <b>تنظیمات شما</b>
+{t('settings_title', lang)}
 
-📊 <b>تایم‌فریم پیش‌فرض:</b> {settings.default_timeframe}
-⚡ <b>لوریج پیش‌فرض:</b> {settings.default_leverage}x
-💰 <b>ریسک هر معامله:</b> {settings.risk_per_trade}%
-🔔 <b>اعلان‌ها:</b> {'✅ فعال' if settings.notifications else '❌ غیرفعال'}
-🌐 <b>زبان:</b> {'🇮🇷 فارسی' if settings.language == 'fa' else '🇬🇧 English'}
-⭐ <b>علاقه‌مندی‌ها:</b> {', '.join(settings.favorite_symbols)}
+{t('default_timeframe', lang)} {settings.default_timeframe}
+{t('default_leverage', lang)} {settings.default_leverage}x
+{t('risk_per_trade', lang)} {settings.risk_per_trade}%
+{t('notifications', lang)} {notifications_status}
+{t('language', lang)} {lang_display}
+{t('favorites', lang)} {', '.join(settings.favorite_symbols)}
 
-تنظیمات را شخصی‌سازی کنید!
+{t('customize_settings', lang)}
         """
         keyboard = [
-            [InlineKeyboardButton("📊 تایم‌فریم", callback_data="settings_timeframe"),
-             InlineKeyboardButton("⚡ لوریج", callback_data="settings_leverage")],
-            [InlineKeyboardButton("💰 ریسک", callback_data="settings_risk"),
-             InlineKeyboardButton("🔔 اعلان‌ها", callback_data="toggle_notifications")],
-            [InlineKeyboardButton("🌐 زبان", callback_data="settings_language")]
+            [InlineKeyboardButton(f"📊 {t('default_timeframe', lang).replace('<b>', '').replace('</b>', '').replace('📊 ', '')}", callback_data="settings_timeframe"),
+             InlineKeyboardButton(f"⚡ {t('default_leverage', lang).replace('<b>', '').replace('</b>', '').replace('⚡ ', '')}", callback_data="settings_leverage")],
+            [InlineKeyboardButton(f"💰 {t('risk_per_trade', lang).replace('<b>', '').replace('</b>', '').replace('💰 ', '')}", callback_data="settings_risk"),
+             InlineKeyboardButton(f"🔔 {t('notifications', lang).replace('<b>', '').replace('</b>', '').replace('🔔 ', '')}", callback_data="toggle_notifications")],
+            [InlineKeyboardButton(f"🌐 {t('language', lang).replace('<b>', '').replace('</b>', '').replace('🌐 ', '')}", callback_data="settings_language")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await update.message.reply_text(msg, parse_mode=ParseMode.HTML, reply_markup=reply_markup)
     
     async def status_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle /status command"""
-        msg = """
-🟢 <b>وضعیت سیستم</b>
+        user_id = update.effective_user.id
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
+        
+        msg = f"""
+{t('status_title', lang)}
 
-✅ سیستم معاملاتی: آنلاین
-✅ ارائه‌دهنده داده: متصل
-✅ مدل هوش مصنوعی: فعال
-✅ هشدارها: در حال اجرا
+{t('trading_system_online', lang)}
+{t('data_provider_connected', lang)}
+{t('ai_model_active', lang)}
+{t('alerts_running', lang)}
 
-🤖 نسخه ربات: 3.0.0
-⚡ زمان پاسخ: کمتر از 500 میلی‌ثانیه
+{t('bot_version', lang)}
+{t('response_time', lang)}
         """
         await update.message.reply_text(msg, parse_mode=ParseMode.HTML)
     
     async def button_callback(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle button callbacks"""
-        query = update.callback_query
-        await query.answer()
-        data = query.data
-        
-        if data.startswith("analyze_"):
-            symbol = data.split("_")[1]
-            await self.perform_analysis(update, symbol, query)
-        
-        elif data.startswith("analysis_detail_"):
-            # Handle this BEFORE generic patterns
-            analysis_id = data.split("_")[2]
-            await self.analysis_detail_command(update, context, analysis_id)
-        
-        elif data.startswith("refresh_detail_"):
-            # Handle this BEFORE the generic refresh_ pattern
-            analysis_id = data.split("_")[2]
-            await query.message.reply_text("🔄 در حال بروزرسانی جزئیات...")
-            await self.analysis_detail_command(update, context, analysis_id)
-        
-        elif data.startswith("refresh_"):
-            symbol = data.split("_")[1]
-            msg = await query.message.reply_text(f"🔄 در حال بروزرسانی {symbol}...\n\n💡 می‌توانید از دستورات دیگر استفاده کنید")
-            # Run refresh in background
-            self._run_in_background(self._refresh_analysis_background(msg, query.message, symbol))
-        
-        elif data.startswith("alert_"):
-            symbol = data.split("_")[1]
-            await query.message.reply_text(f"⚡ برای تنظیم هشدار: /setalert {symbol} [قیمت]")
-        
-        elif data == "settings_timeframe":
-            # Show timeframe selection menu
-            keyboard = [
-                [InlineKeyboardButton("15m", callback_data="timeframe_15m"),
-                 InlineKeyboardButton("1h", callback_data="timeframe_1h"),
-                 InlineKeyboardButton("4h", callback_data="timeframe_4h")],
-                [InlineKeyboardButton("1d", callback_data="timeframe_1d")]
-            ]
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await query.message.reply_text("📊 <b>انتخاب تایم‌فریم پیش‌فرض:</b>", parse_mode=ParseMode.HTML, reply_markup=reply_markup)
-        
-        elif data.startswith("timeframe_"):
-            timeframe = data.split("_")[1]
+        try:
+            query = update.callback_query
+            await query.answer()
+            data = query.data
             user_id = query.from_user.id
             settings = await self.state_manager.get_user_settings(user_id)
-            settings.default_timeframe = timeframe
-            await self.state_manager.update_user_settings(user_id, settings)
-            await query.message.reply_text(f"✅ تایم‌فریم پیش‌فرض به <b>{timeframe}</b> تغییر کرد!", parse_mode=ParseMode.HTML)
+            lang = settings.language
+            print(f"🔘 Button pressed: {data}")  # Debug log
+            
+            if data.startswith("analyze_"):
+                symbol = data.split("_")[1]
+                await self.perform_analysis(update, symbol, query)
+            
+            elif data.startswith("analysis_detail_"):
+                # Handle this BEFORE generic patterns
+                analysis_id = data.split("_")[2]
+                await self.analysis_detail_command(update, context, analysis_id)
+            
+            elif data.startswith("refresh_detail_"):
+                # Handle this BEFORE the generic refresh_ pattern
+                analysis_id = data.split("_")[2]
+                await query.message.reply_text(t('refreshing_details', lang))
+                await self.analysis_detail_command(update, context, analysis_id)
+            
+            elif data.startswith("refresh_"):
+                symbol = data.split("_")[1]
+                msg = await query.message.reply_text(t('refreshing_with_hint', lang, symbol=symbol))
+                # Run refresh in background
+                self._run_in_background(self._refresh_analysis_background(msg, query.message, symbol, lang))
+            
+            elif data.startswith("alert_"):
+                symbol = data.split("_")[1]
+                await query.message.reply_text(t('for_alert_set', lang, symbol=symbol))
+            
+            elif data == "settings_timeframe":
+                # Show timeframe selection menu
+                keyboard = [
+                    [InlineKeyboardButton("15m", callback_data="timeframe_15m"),
+                     InlineKeyboardButton("1h", callback_data="timeframe_1h"),
+                     InlineKeyboardButton("4h", callback_data="timeframe_4h")],
+                    [InlineKeyboardButton("1d", callback_data="timeframe_1d")]
+                ]
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                await query.message.reply_text(t('select_timeframe_msg', lang), parse_mode=ParseMode.HTML, reply_markup=reply_markup)
+            
+            elif data.startswith("timeframe_"):
+                timeframe = data.split("_")[1]
+                settings.default_timeframe = timeframe
+                await self.state_manager.update_user_settings(user_id, settings)
+                await query.message.reply_text(t('timeframe_changed_msg', lang, value=timeframe), parse_mode=ParseMode.HTML)
+            
+            elif data == "settings_leverage":
+                # Show leverage selection menu
+                keyboard = [
+                    [InlineKeyboardButton("5x", callback_data="leverage_5"),
+                     InlineKeyboardButton("10x", callback_data="leverage_10"),
+                     InlineKeyboardButton("20x", callback_data="leverage_20")],
+                    [InlineKeyboardButton("50x", callback_data="leverage_50"),
+                     InlineKeyboardButton("100x", callback_data="leverage_100")]
+                ]
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                await query.message.reply_text(t('select_leverage_msg', lang), parse_mode=ParseMode.HTML, reply_markup=reply_markup)
+            
+            elif data.startswith("leverage_"):
+                leverage = int(data.split("_")[1])
+                settings.default_leverage = leverage
+                await self.state_manager.update_user_settings(user_id, settings)
+                await query.message.reply_text(t('leverage_changed_msg', lang, value=leverage), parse_mode=ParseMode.HTML)
+            
+            elif data == "settings_risk":
+                # Show risk percentage selection menu
+                keyboard = [
+                    [InlineKeyboardButton("1%", callback_data="risk_1"),
+                     InlineKeyboardButton("2%", callback_data="risk_2"),
+                     InlineKeyboardButton("3%", callback_data="risk_3")],
+                    [InlineKeyboardButton("5%", callback_data="risk_5"),
+                     InlineKeyboardButton("10%", callback_data="risk_10")]
+                ]
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                await query.message.reply_text(t('select_risk_msg', lang), parse_mode=ParseMode.HTML, reply_markup=reply_markup)
+            
+            elif data.startswith("risk_"):
+                risk = float(data.split("_")[1])
+                settings.risk_per_trade = risk
+                await self.state_manager.update_user_settings(user_id, settings)
+                await query.message.reply_text(t('risk_changed_msg', lang, value=risk), parse_mode=ParseMode.HTML)
+            
+            elif data == "settings_language":
+                # Show language selection menu
+                keyboard = [
+                    [InlineKeyboardButton("🇮🇷 فارسی", callback_data="lang_fa"),
+                     InlineKeyboardButton("🇬🇧 English", callback_data="lang_en")]
+                ]
+                reply_markup = InlineKeyboardMarkup(keyboard)
+                await query.message.reply_text(t('select_language_msg', lang), parse_mode=ParseMode.HTML, reply_markup=reply_markup)
+            
+            elif data.startswith("lang_"):
+                language = data.split("_")[1]
+                settings.language = language
+                await self.state_manager.update_user_settings(user_id, settings)
+                lang_name = "فارسی" if language == "fa" else "English"
+                msg_key = 'language_changed_fa' if language == "fa" else 'language_changed_en'
+                await query.message.reply_text(t(msg_key, language, lang_name=lang_name), parse_mode=ParseMode.HTML)
+            
+            elif data == "back_to_analyses":
+                await self.analyses_command(update, context)
+            
+            elif data == "toggle_notifications":
+                settings.notifications = not settings.notifications
+                await self.state_manager.update_user_settings(user_id, settings)
+                status = t('status_enabled', lang) if settings.notifications else t('status_disabled', lang)
+                await query.message.reply_text(t('notifications_toggled', lang, status=status))
         
-        elif data == "settings_leverage":
-            # Show leverage selection menu
-            keyboard = [
-                [InlineKeyboardButton("5x", callback_data="leverage_5"),
-                 InlineKeyboardButton("10x", callback_data="leverage_10"),
-                 InlineKeyboardButton("20x", callback_data="leverage_20")],
-                [InlineKeyboardButton("50x", callback_data="leverage_50"),
-                 InlineKeyboardButton("100x", callback_data="leverage_100")]
-            ]
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await query.message.reply_text("⚡ <b>انتخاب لوریج پیش‌فرض:</b>", parse_mode=ParseMode.HTML, reply_markup=reply_markup)
-        
-        elif data.startswith("leverage_"):
-            leverage = int(data.split("_")[1])
-            user_id = query.from_user.id
-            settings = await self.state_manager.get_user_settings(user_id)
-            settings.default_leverage = leverage
-            await self.state_manager.update_user_settings(user_id, settings)
-            await query.message.reply_text(f"✅ لوریج پیش‌فرض به <b>{leverage}x</b> تغییر کرد!", parse_mode=ParseMode.HTML)
-        
-        elif data == "settings_risk":
-            # Show risk percentage selection menu
-            keyboard = [
-                [InlineKeyboardButton("1%", callback_data="risk_1"),
-                 InlineKeyboardButton("2%", callback_data="risk_2"),
-                 InlineKeyboardButton("3%", callback_data="risk_3")],
-                [InlineKeyboardButton("5%", callback_data="risk_5"),
-                 InlineKeyboardButton("10%", callback_data="risk_10")]
-            ]
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await query.message.reply_text("💰 <b>انتخاب ریسک هر معامله:</b>", parse_mode=ParseMode.HTML, reply_markup=reply_markup)
-        
-        elif data.startswith("risk_"):
-            risk = float(data.split("_")[1])
-            user_id = query.from_user.id
-            settings = await self.state_manager.get_user_settings(user_id)
-            settings.risk_per_trade = risk
-            await self.state_manager.update_user_settings(user_id, settings)
-            await query.message.reply_text(f"✅ ریسک هر معامله به <b>{risk}%</b> تغییر کرد!", parse_mode=ParseMode.HTML)
-        
-        elif data == "settings_language":
-            # Show language selection menu
-            keyboard = [
-                [InlineKeyboardButton("🇮🇷 فارسی", callback_data="lang_fa"),
-                 InlineKeyboardButton("🇬🇧 English", callback_data="lang_en")]
-            ]
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            await query.message.reply_text("🌐 <b>انتخاب زبان:</b>", parse_mode=ParseMode.HTML, reply_markup=reply_markup)
-        
-        elif data.startswith("lang_"):
-            language = data.split("_")[1]
-            user_id = query.from_user.id
-            settings = await self.state_manager.get_user_settings(user_id)
-            settings.language = language
-            await self.state_manager.update_user_settings(user_id, settings)
-            lang_name = "فارسی" if language == "fa" else "English"
-            await query.message.reply_text(f"✅ زبان به <b>{lang_name}</b> تغییر کرد!", parse_mode=ParseMode.HTML)
-        
-        elif data == "back_to_analyses":
-            await self.analyses_command(update, context)
-        
-        elif data == "toggle_notifications":
-            user_id = query.from_user.id
-            settings = await self.state_manager.get_user_settings(user_id)
-            settings.notifications = not settings.notifications
-            await self.state_manager.update_user_settings(user_id, settings)
-            status = "فعال" if settings.notifications else "غیرفعال"
-            await query.message.reply_text(f"🔔 اعلان‌ها {status} شد!")
+        except Exception as e:
+            print(f"❌ Button callback error: {e}")
+            import traceback
+            traceback.print_exc()
+            try:
+                await update.callback_query.message.reply_text(t('error_button_processing', lang, error=str(e)))
+            except:
+                pass
     
     async def handle_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle text messages"""
@@ -513,6 +554,8 @@ class CommandHandlers:
     async def analyses_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle /analyses command - Show analysis history"""
         user_id = update.effective_user.id
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
         
         # Handle both message and callback query contexts
         if hasattr(update, 'callback_query') and update.callback_query:
@@ -520,32 +563,35 @@ class CommandHandlers:
         else:
             message_obj = update.message
             
-        await message_obj.reply_text("📊 در حال دریافت تاریخچه تحلیل‌ها...")
+        await message_obj.reply_text(t('loading_history_msg', lang))
         
         try:
             if not self.analysis_history_repo:
-                await message_obj.reply_text("❌ خطا: دیتابیس هنوز آماده نشده است.")
+                await message_obj.reply_text(t('error_db_not_ready', lang))
                 return
             
             analyses = await self.analysis_history_repo.get_user_analyses(user_id, limit=20)
             stats = await self.analysis_history_repo.get_analysis_stats(user_id)
             
             if not analyses:
-                msg = "📊 <b>تاریخچه تحلیل‌ها</b>\n\nهنوز تحلیلی ثبت نشده است."
+                msg = f"{t('analysis_history_title', lang)}\n\n{t('no_analyses', lang)}"
             else:
-                msg = "📊 <b>تاریخچه تحلیل‌ها (20 تحلیل اخیر)</b>\n\n"
+                msg = f"{t('recent_analyses', lang)}\n\n"
                 
                 for analysis in analyses[:10]:
                     symbol = analysis.get('symbol', 'N/A')
                     signal_type = analysis.get('signal_type', 'N/A')
                     signal_grade = analysis.get('signal_grade', '')
-                    confidence = analysis.get('confidence', 0)
-                    price = analysis.get('price', 0)
-                    entry_price = analysis.get('entry_price', 0)
-                    stop_loss = analysis.get('stop_loss', 0)
-                    tp1 = analysis.get('take_profit_1', 0)
-                    tp2 = analysis.get('take_profit_2', 0)
-                    tp3 = analysis.get('take_profit_3', 0)
+                    
+                    # Convert to float to handle both str and numeric types from database
+                    confidence = self._safe_float(analysis.get('confidence'))
+                    price = self._safe_float(analysis.get('price'))
+                    entry_price = self._safe_float(analysis.get('entry_price'))
+                    stop_loss = self._safe_float(analysis.get('stop_loss'))
+                    tp1 = self._safe_float(analysis.get('take_profit_1'))
+                    tp2 = self._safe_float(analysis.get('take_profit_2'))
+                    tp3 = self._safe_float(analysis.get('take_profit_3'))
+                    
                     timestamp = analysis.get('timestamp', '')
                     analysis_type = analysis.get('analysis_type', 'normal')
                     
@@ -599,12 +645,12 @@ class CommandHandlers:
                     avg_confidence = stats.get('avg_confidence', 0)
                     
                     msg += f"━━━━━━━━━━━━━━━━━━━━━━\n"
-                    msg += f"📈 <b>آمار کلی:</b>\n"
-                    msg += f"• کل تحلیل‌ها: {total_analyses}\n"
-                    msg += f"• سیگنال خرید: {buy_signals}\n"
-                    msg += f"• سیگنال فروش: {sell_signals}\n"
-                    msg += f"• سیگنال نگهداری: {hold_signals}\n"
-                    msg += f"• میانگین اطمینان: {avg_confidence:.1f}%\n"
+                    msg += f"{t('statistics_section', lang)}\n"
+                    msg += f"• {t('total_analyses_label', lang)}: {total_analyses}\n"
+                    msg += f"• {t('buy_signals_label', lang)}: {buy_signals}\n"
+                    msg += f"• {t('sell_signals_label', lang)}: {sell_signals}\n"
+                    msg += f"• {t('hold_signals_label', lang)}: {hold_signals}\n"
+                    msg += f"• {t('avg_confidence', lang)}: {avg_confidence:.1f}%\n"
             
             # Create detail buttons for each analysis
             keyboard = []
@@ -613,33 +659,35 @@ class CommandHandlers:
                 symbol = analysis.get('symbol', 'N/A')
                 signal_type = analysis.get('signal_type', 'N/A')
                 signal_emoji = "🟢" if signal_type in ['BUY', 'LONG'] else "🔴" if signal_type in ['SELL', 'SHORT'] else "⚪"
-                keyboard.append([InlineKeyboardButton(f"{signal_emoji} جزئیات {symbol}", callback_data=f"analysis_detail_{analysis_id}")])
+                keyboard.append([InlineKeyboardButton(f"{signal_emoji} {t('btn_detail_prefix', lang)} {symbol}", callback_data=f"analysis_detail_{analysis_id}")])
             
             reply_markup = InlineKeyboardMarkup(keyboard) if keyboard else None
             await message_obj.reply_text(msg, parse_mode=ParseMode.HTML, reply_markup=reply_markup)
             
         except Exception as e:
-            await message_obj.reply_text(f"❌ خطا در دریافت تاریخچه: {str(e)}")
+            await message_obj.reply_text(t('error_history', lang, error=str(e)))
             print(f"Analyses error: {e}")
     
     async def analysis_detail_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE, analysis_id: str):
         """Handle detailed analysis view - runs in background"""
         query = update.callback_query if hasattr(update, 'callback_query') else None
         user_id = update.effective_user.id
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
         
         if query:
-            msg = await query.message.reply_text("📋 در حال دریافت جزئیات تحلیل...\n\n💡 می‌توانید از دستورات دیگر استفاده کنید")
+            msg = await query.message.reply_text(t('loading_details_msg', lang))
         else:
-            msg = await update.message.reply_text("📋 در حال دریافت جزئیات تحلیل...\n\n💡 می‌توانید از دستورات دیگر استفاده کنید")
+            msg = await update.message.reply_text(t('loading_details_msg', lang))
         
         # Run in background
-        self._run_in_background(self._analysis_detail_background(update, msg, query, user_id, analysis_id))
+        self._run_in_background(self._analysis_detail_background(update, msg, query, user_id, analysis_id, lang))
     
-    async def _analysis_detail_background(self, update: Update, msg, query, user_id: int, analysis_id: str):
+    async def _analysis_detail_background(self, update: Update, msg, query, user_id: int, analysis_id: str, lang: str):
         """Background task for analysis detail view"""
         try:
             if not self.analysis_history_repo:
-                await update.message.reply_text("❌ خطا: دیتابیس هنوز آماده نشده است.")
+                await update.message.reply_text(t('error_db_not_ready', lang))
                 return
             
             # Get specific analysis by ID
@@ -650,21 +698,24 @@ class CommandHandlers:
             })
             
             if not analysis:
-                await update.message.reply_text("❌ تحلیل مورد نظر یافت نشد.")
+                await update.message.reply_text(t('analysis_not_found', lang))
                 return
             
             # Format detailed analysis
             symbol = analysis.get('symbol', 'N/A')
             signal_type = analysis.get('signal_type', 'N/A')
             signal_grade = analysis.get('signal_grade', '')
-            confidence = analysis.get('confidence', 0)
-            price = analysis.get('price', 0)
-            entry_price = analysis.get('entry_price', 0)
-            stop_loss = analysis.get('stop_loss', 0)
-            tp1 = analysis.get('take_profit_1', 0)
-            tp2 = analysis.get('take_profit_2', 0)
-            tp3 = analysis.get('take_profit_3', 0)
-            rsi = analysis.get('rsi', 0)
+            
+            # Convert to float to handle both str and numeric types from database
+            confidence = self._safe_float(analysis.get('confidence'))
+            price = self._safe_float(analysis.get('price'))
+            entry_price = self._safe_float(analysis.get('entry_price'))
+            stop_loss = self._safe_float(analysis.get('stop_loss'))
+            tp1 = self._safe_float(analysis.get('take_profit_1'))
+            tp2 = self._safe_float(analysis.get('take_profit_2'))
+            tp3 = self._safe_float(analysis.get('take_profit_3'))
+            rsi = self._safe_float(analysis.get('rsi'))
+            
             trend = analysis.get('trend', 'NEUTRAL')
             reasoning = analysis.get('reasoning', '')
             analysis_type = analysis.get('analysis_type', 'normal')
@@ -761,7 +812,7 @@ class CommandHandlers:
                         for status in target_status:
                             profit_loss_info += f"   {status}\n"
                     else:
-                        profit_loss_info += f"\nℹ️ <b>تارگتی برای این تحلیل تعریف نشده است</b>\n"
+                        profit_loss_info += f"\n{t('no_targets_defined', lang)}\n"
                     
                     # Check if stop loss was hit
                     sl_hit = False
@@ -775,50 +826,50 @@ class CommandHandlers:
                         
             except Exception as market_error:
                 current_price = 0
-                profit_loss_info = f"⚠️ خطا در دریافت قیمت فعلی: {str(market_error)}\n"
+                profit_loss_info = t('error_current_price', lang, error=str(market_error)) + "\n"
             
             # Format the detailed message
             signal_emoji = "🟢" if signal_type in ['BUY', 'LONG'] else "🔴" if signal_type in ['SELL', 'SHORT'] else "⚪"
             type_badge = "🧠" if analysis_type == 'smart' else "📊"
             
             detail_msg = f"""
-{signal_emoji} {type_badge} <b>جزئیات تحلیل {symbol}</b>
+{t('analysis_detail_title', lang, emoji=signal_emoji, badge=type_badge, symbol=symbol)}
 
 ━━━━━━━━━━━━━━━━━━━━━━
-<b>📊 اطلاعات سیگنال</b>
-<b>نوع:</b> {signal_type} ({signal_grade})
-<b>درجه اطمینان:</b> {confidence:.1f}%
-<b>زمان تحلیل:</b> {timestamp if isinstance(timestamp, str) else timestamp.strftime('%Y-%m-%d %H:%M') if timestamp else 'N/A'}
+{t('signal_info_section', lang)}
+{t('type', lang)} {signal_type} ({signal_grade})
+{t('confidence_level', lang)} {confidence:.1f}%
+{t('analysis_time', lang)} {timestamp if isinstance(timestamp, str) else timestamp.strftime('%Y-%m-%d %H:%M') if timestamp else 'N/A'}
 
 ━━━━━━━━━━━━━━━━━━━━━━
-<b>💰 اطلاعات قیمت</b>
-<b>قیمت تحلیل:</b> ${price:,.4f}
-<b>قیمت ورود:</b> ${entry_price:,.4f}
-<b>قیمت فعلی:</b> ${current_price:,.4f}
-<b>حد ضرر:</b> ${stop_loss:,.4f}
-<b>تارگت 1:</b> ${tp1:,.4f}
-<b>تارگت 2:</b> ${tp2:,.4f}
-<b>تارگت 3:</b> ${tp3:,.4f}
+{t('price_info_section', lang)}
+{t('analysis_price', lang)} ${price:,.4f}
+{t('entry_price_label', lang)} ${entry_price:,.4f}
+{t('current_price_label', lang)} ${current_price:,.4f}
+{t('stop_loss_label', lang)} ${stop_loss:,.4f}
+<b>{t('targets', lang)} 1:</b> ${tp1:,.4f}
+<b>{t('targets', lang)} 2:</b> ${tp2:,.4f}
+<b>{t('targets', lang)} 3:</b> ${tp3:,.4f}
 
 ━━━━━━━━━━━━━━━━━━━━━━
-<b>📈 وضعیت فعلی</b>
+<b>📈 {t('current_price', lang).replace('<b>', '').replace('</b>', '').replace('💰 ', '')}</b>
 {profit_loss_info}
 {potential_profit_loss}
 
 ━━━━━━━━━━━━━━━━━━━━━━
-<b>🔍 تحلیل تکنیکال</b>
-<b>RSI:</b> {rsi:.1f}
-<b>ترند:</b> {trend}
+{t('technical_analysis_section', lang)}
+{t('rsi_label', lang)} {rsi:.1f}
+{t('trend_label', lang)} {trend}
 
 ━━━━━━━━━━━━━━━━━━━━━━
-<b>🧠 دلیل تحلیل</b>
+{t('analysis_reasoning_section', lang)}
 {reasoning}
 """
             
             # Add action buttons
             keyboard = [
-                [InlineKeyboardButton("🔄 بروزرسانی", callback_data=f"refresh_detail_{analysis_id}")],
-                [InlineKeyboardButton("🔙 بازگشت به تاریخچه", callback_data="back_to_analyses")]
+                [InlineKeyboardButton(t('btn_refresh_detail', lang), callback_data=f"refresh_detail_{analysis_id}")],
+                [InlineKeyboardButton(t('btn_back_to_history', lang), callback_data="back_to_analyses")]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             
@@ -835,18 +886,22 @@ class CommandHandlers:
             
         except Exception as e:
             try:
-                await msg.edit_text(f"❌ خطا در دریافت جزئیات: {str(e)}")
+                await msg.edit_text(t('error_getting_details', lang, error=str(e)))
             except:
+                error_msg = t('error_getting_details', lang, error=str(e))
                 if query:
-                    await query.message.reply_text(f"❌ خطا در دریافت جزئیات: {str(e)}")
+                    await query.message.reply_text(error_msg)
                 else:
-                    await update.message.reply_text(f"❌ خطا در دریافت جزئیات: {str(e)}")
+                    await update.message.reply_text(error_msg)
             print(f"Analysis detail error: {e}")
     
     
     async def market_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle /market command - Market overview"""
-        await update.message.reply_text("🌍 در حال دریافت اطلاعات بازار...")
+        user_id = update.effective_user.id
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
+        await update.message.reply_text(t('loading_market', lang))
         
         try:
             # Get prices for major cryptocurrencies
@@ -861,26 +916,25 @@ class CommandHandlers:
                 except:
                     pass
             
-            msg += "\n💡 برای تحلیل دقیق‌تر از دستور /analyze استفاده کنید."
+            msg += f"\n{t('market_hint', lang)}"
             
-            keyboard = [[InlineKeyboardButton("📊 تحلیل BTC", callback_data="analyze_BTCUSDT"),
-                        InlineKeyboardButton("📊 تحلیل ETH", callback_data="analyze_ETHUSDT")]]
+            keyboard = [[InlineKeyboardButton(t('btn_analyze_btc', lang), callback_data="analyze_BTCUSDT"),
+                        InlineKeyboardButton(t('btn_analyze_eth', lang), callback_data="analyze_ETHUSDT")]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             await update.message.reply_text(msg, parse_mode=ParseMode.HTML, reply_markup=reply_markup)
             
         except Exception as e:
-            await update.message.reply_text(f"❌ خطا در دریافت اطلاعات بازار: {str(e)}")
+            await update.message.reply_text(t('error_market_data', lang, error=str(e)))
     
     
     async def topmovers_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Handle /topmovers command - Show top price movers"""
-        await update.message.reply_text("🚀 در حال دریافت برترین تغییرات قیمت...")
+        user_id = update.effective_user.id
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
+        await update.message.reply_text(t('loading_topmovers', lang))
         
-        msg = """🚀 <b>برترین تغییرات قیمت (24 ساعت)</b>
-
-این امکان به زودی اضافه خواهد شد.
-از دستور /analyze برای تحلیل ارزهای خاص استفاده کنید.
-"""
+        msg = f"{t('topmovers_title', lang)}\n\n{t('topmovers_coming_soon', lang)}"
         await update.message.reply_text(msg, parse_mode=ParseMode.HTML)
     
     async def check_alerts_task(self, context: ContextTypes.DEFAULT_TYPE):
@@ -913,22 +967,24 @@ class CommandHandlers:
     
     async def smartanalyze_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """
-        Handle /smartanalyze command - تحلیل هوشمند و انتخاب بهترین ارز - runs in background
+        Handle /smartanalyze command - Smart analysis with best coin selection - runs in background
         """
         user_id = update.effective_user.id
+        settings = await self.state_manager.get_user_settings(user_id)
+        lang = settings.language
         
-        # پیام اولیه
+        # Initial message
         msg = await update.message.reply_text(
-            "🧠 <b>تحلیل هوشمند پیشرفته</b>\n\n"
-            "🔍 در حال آماده‌سازی...\n\n"
-            "💡 می‌توانید از دستورات دیگر استفاده کنید",
+            f"{t('smart_analysis_title', lang)}\n\n"
+            f"{t('smart_analysis_preparing', lang)}\n\n"
+            f"{t('can_use_other_commands', lang)}",
             parse_mode=ParseMode.HTML
         )
         
         # Run in background
-        self._run_in_background(self._smartanalyze_background(update, context, msg, user_id))
+        self._run_in_background(self._smartanalyze_background(update, context, msg, user_id, lang))
     
-    async def _smartanalyze_background(self, update: Update, context: ContextTypes.DEFAULT_TYPE, msg, user_id: int):
+    async def _smartanalyze_background(self, update: Update, context: ContextTypes.DEFAULT_TYPE, msg, user_id: int, lang: str):
         """Background task for smart analysis"""
         try:
             # Callback برای به‌روزرسانی پیشرفت با مدیریت Flood Control
@@ -1005,8 +1061,8 @@ class CommandHandlers:
             selected_coin = top_coins[0]
             best_symbol = selected_coin['symbol']
             
-            # ارسال گزارش تحلیل
-            report_text = "🧠 <b>گزارش تحلیل هوشمند پیشرفته</b>\n"
+            # Send analysis report
+            report_text = f"{t('smart_analysis_report', lang)}\n"
             report_text += "=" * 40 + "\n\n"
             
             # نمایش ارزهای برتر
@@ -1044,20 +1100,20 @@ class CommandHandlers:
             
             await msg.edit_text(report_text, parse_mode=ParseMode.HTML)
             
-            # تحلیل کامل ICT برای بهترین ارز
-            await asyncio.sleep(2)  # تاخیر بیشتر برای جلوگیری از flood
+            # Full ICT analysis for best coin
+            await asyncio.sleep(2)  # Delay to prevent flood
             signal_msg = await update.message.reply_text(
-                f"📊 <b>در حال تحلیل کامل ICT برای {best_symbol}...</b>",
+                t('analyzing_ict_for', lang, symbol=best_symbol),
                 parse_mode=ParseMode.HTML
             )
             
             try:
-                # تحلیل ICT
+                # ICT Analysis
                 market_data = await self.trading_system.aggregator.aggregate_ict_data(best_symbol)
                 
                 # Check for errors in market data
                 if 'error' in market_data:
-                    error_msg = market_data.get('user_message', market_data.get('error', 'خطای نامشخص'))
+                    error_msg = market_data.get('user_message', market_data.get('error', t('error_unknown', lang)))
                     await signal_msg.edit_text(f"❌ {error_msg}", parse_mode=ParseMode.HTML)
                     await advanced_selector.close()
                     return
@@ -1066,7 +1122,7 @@ class CommandHandlers:
                 
                 # Check for errors in signal
                 if 'error' in signal:
-                    error_msg = signal.get('user_message', signal.get('error', 'خطای نامشخص'))
+                    error_msg = signal.get('user_message', signal.get('error', t('error_unknown', lang)))
                     await signal_msg.edit_text(f"❌ {error_msg}", parse_mode=ParseMode.HTML)
                     await advanced_selector.close()
                     return
@@ -1184,7 +1240,7 @@ class CommandHandlers:
                 
             except Exception as e:
                 await signal_msg.edit_text(
-                    f"❌ خطا در تحلیل ICT: {str(e)}",
+                    t('error_ict_analysis', lang, error=str(e)),
                     parse_mode=ParseMode.HTML
                 )
                 print(f"ICT analysis error: {e}")
@@ -1193,7 +1249,7 @@ class CommandHandlers:
             await advanced_selector.close()
             
         except Exception as e:
-            error_msg = f"❌ خطا در تحلیل هوشمند:\n{str(e)}"
+            error_msg = t('error_smart_analysis', lang, error=str(e))
             try:
                 await msg.edit_text(error_msg, parse_mode=ParseMode.HTML)
             except:

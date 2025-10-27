@@ -57,10 +57,14 @@ BTC, ETH, BNB, ADA, XRP, DOT, LINK, LTC, BCH, XLM, DOGE, SOL, MATIC, UNI, AVAX a
 
 1. **Clone the repository**
 ```bash
-cd /home/amanj/Desktop/tarder
+git clone https://github.com/amanjmoezi/NeuroTrade.git
+```
+2. **Change directory**
+```bash
+cd /home/[username]/tarder
 ```
 
-2. **Create virtual environment**
+3. **Create virtual environment**
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # On Linux/Mac
@@ -68,12 +72,12 @@ source .venv/bin/activate  # On Linux/Mac
 .venv\Scripts\activate  # On Windows
 ```
 
-3. **Install dependencies**
+4. **Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Configure environment variables**
+5. **Configure environment variables**
 
 Create or edit `.env` file:
 ```env

@@ -733,4 +733,33 @@ This supplement includes:
 
 ---
 
+## ⚠️ CRITICAL OUTPUT REQUIREMENTS
+
+**IMPORTANT:** Your response MUST be a single, valid JSON object only. Follow these rules strictly:
+
+1. **Output ONLY the JSON object** - No markdown code blocks, no explanations, no extra text
+2. **Single JSON object** - Return exactly ONE complete JSON object, not multiple objects
+3. **No formatting wrappers** - Do NOT wrap the JSON in ```json or ``` blocks
+4. **No additional commentary** - Do NOT add any text before or after the JSON
+5. **Valid JSON syntax** - Ensure all quotes, commas, and brackets are correct
+6. **Complete structure** - Include all required fields as shown in the example above
+
+**CORRECT:**
+```
+{"signal": "LONG", "timestamp": "...", ...}
+```
+
+**INCORRECT:**
+```
+Here is the analysis:
+```json
+{"signal": "LONG", ...}
+```
+Additional notes...
+```
+
+**Your response must start with `{` and end with `}`**
+
+---
+
 **END OF SYSTEM PROMPT v3.0**

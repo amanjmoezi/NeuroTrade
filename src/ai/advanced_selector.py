@@ -32,7 +32,12 @@ class AdvancedCoinSelector:
         self.popular_coins = [
             "BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT", "ADAUSDT",
             "XRPUSDT", "DOGEUSDT", "MATICUSDT", "DOTUSDT", "AVAXUSDT",
-            "LINKUSDT", "UNIUSDT", "LTCUSDT", "ATOMUSDT", "APTUSDT"
+            "LINKUSDT", "UNIUSDT", "LTCUSDT", "ATOMUSDT", "APTUSDT",
+            "ARBUSDT", "OPUSDT", "INJUSDT", "SUIUSDT", "NEARUSDT",
+            "FTMUSDT", "TRXUSDT", "SHIBUSDT", "PEPEUSDT", "VETUSDT",
+            "HBARUSDT", "IMXUSDT", "AAVEUSDT", "GRTUSDT", "SANDUSDT",
+            "MANAUSDT", "AXSUSDT", "THETAUSDT", "XTZUSDT", "RUNEUSDT",
+            "EGLDUSDT", "KAVAUSDT", "ENJUSDT", "CHZUSDT", "CRVUSDT"
         ]
         
         # وزن‌های امتیازدهی پیشرفته

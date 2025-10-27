@@ -9,10 +9,32 @@ import pandas as pd
 from io import BytesIO
 from typing import Dict
 import logging
+import tempfile
+import os
 
 
 class ChartGenerator:
     """Generate trading charts"""
+    
+    def generate_chart(self, market_data: Dict, signal: Dict, symbol: str) -> str:
+        """Generate chart and save to temporary file, returns file path"""
+        try:
+            # Create chart using existing method
+            chart_buffer = self.create_price_chart(market_data, signal)
+            
+            if chart_buffer is None:
+                raise Exception("Failed to create chart buffer")
+            
+            # Create temporary file
+            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.png', prefix=f'chart_{symbol}_')
+            temp_file.write(chart_buffer.getvalue())
+            temp_file.close()
+            
+            return temp_file.name
+            
+        except Exception as e:
+            logging.error(f"Error generating chart file: {e}")
+            raise
     
     @staticmethod
     def create_price_chart(market_data: Dict, signal: Dict) -> BytesIO:

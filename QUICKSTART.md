@@ -1,5 +1,5 @@
-Full target : TP4# 🚀 Quick Start Guide
-
+# 🚀 Quick Start Guide
+---
 ## Step 1: Install Dependencies
 
 ```bash
@@ -94,3 +94,6 @@ Your ICT Trading Bot is now running and ready to provide:
 - ✅ And much more!
 
 **Happy Trading! 📈🚀**
+
+
+
