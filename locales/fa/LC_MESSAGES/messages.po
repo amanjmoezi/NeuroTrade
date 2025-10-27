@@ -1,0 +1,835 @@
+# Persian (Farsi) translations for Trading Bot.
+# Copyright (C) 2024
+# This file is distributed under the same license as the Trading Bot package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Trading Bot 3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-27 11:55+0330\n"
+"PO-Revision-Date: 2024-10-27 11:55+0330\n"
+"Last-Translator: \n"
+"Language: fa\n"
+"Language-Team: Persian\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.0\n"
+
+# ============================================
+# WELCOME AND HELP MESSAGES
+# ============================================
+
+msgid "welcome_title"
+msgstr "🤖 <b>به ربات تحلیل ICT خوش آمدید!</b> 🚀"
+
+msgid "welcome_greeting"
+msgstr "سلام {name}! من دستیار پیشرفته معاملات کریپتو شما هستم."
+
+msgid "welcome_features_title"
+msgstr "<b>🎯 امکانات:</b>"
+
+msgid "welcome_features"
+msgstr "• 🧠 تحلیل هوشمند و انتخاب خودکار بهترین ارز\n• تحلیل ICT لحظه‌ای\n• مفاهیم Smart Money\n• هشدار قیمت\n• سیگنال‌های معاملاتی\n• نمودارهای زیبا\n• تاریخچه تحلیل‌ها"
+
+msgid "welcome_commands_title"
+msgstr "<b>📊 دستورات سریع:</b>"
+
+msgid "welcome_ready"
+msgstr "آماده‌اید؟ دستور /smartanalyze را امتحان کنید! 🧠📈"
+
+msgid "help_title"
+msgstr "📚 <b>راهنمای دستورات</b>"
+
+msgid "help_analysis_section"
+msgstr "<b>تحلیل:</b>\n/analyze - انتخاب و تحلیل ارز\n/smartanalyze - 🧠 تحلیل هوشمند و انتخاب بهترین ارز\n/market - بررسی کلی بازار\n/topmovers - برترین تغییرات قیمت"
+
+msgid "help_history_section"
+msgstr "<b>تحلیل‌ها:</b>\n/analyses - تاریخچه تحلیل‌های شما"
+
+msgid "help_alerts_section"
+msgstr "<b>هشدارها:</b>\n/alerts - مشاهده هشدارها\n/setalert [نماد] [قیمت] - تنظیم هشدار"
+
+msgid "help_settings_section"
+msgstr "<b>تنظیمات:</b>\n/settings - تنظیمات\n/status - وضعیت سیستم"
+
+msgid "help_need_help"
+msgstr "نیاز به کمک دارید؟ فقط بپرسید! 💬"
+
+# ============================================
+# COMMANDS
+# ============================================
+
+msgid "cmd_analyze"
+msgstr "تحلیل ارز دیجیتال"
+
+msgid "cmd_smartanalyze"
+msgstr "🧠 تحلیل هوشمند (جدید!)"
+
+msgid "cmd_market"
+msgstr "بررسی کلی بازار"
+
+msgid "cmd_topmovers"
+msgstr "برترین تغییرات قیمت"
+
+msgid "cmd_analyses"
+msgstr "تاریخچه تحلیل‌ها"
+
+msgid "cmd_alerts"
+msgstr "مشاهده هشدارها"
+
+msgid "cmd_setalert"
+msgstr "تنظیم هشدار"
+
+msgid "cmd_settings"
+msgstr "تنظیمات"
+
+msgid "cmd_status"
+msgstr "وضعیت سیستم"
+
+msgid "cmd_help"
+msgstr "لیست کامل دستورات"
+
+# ============================================
+# BUTTON LABELS
+# ============================================
+
+msgid "btn_smart_analysis"
+msgstr "🧠 تحلیل هوشمند"
+
+msgid "btn_analyze_coin"
+msgstr "🔍 تحلیل ارز"
+
+msgid "btn_market_overview"
+msgstr "🌍 بررسی بازار"
+
+msgid "btn_analysis_history"
+msgstr "📊 تاریخچه تحلیل"
+
+msgid "btn_my_alerts"
+msgstr "⚡ هشدارهای من"
+
+msgid "btn_settings"
+msgstr "⚙️ تنظیمات"
+
+msgid "btn_set_alert"
+msgstr "🔔 تنظیم هشدار"
+
+msgid "btn_refresh"
+msgstr "🔄 بروزرسانی"
+
+msgid "btn_details"
+msgstr "جزئیات"
+
+# ============================================
+# ANALYSIS MESSAGES
+# ============================================
+
+msgid "analyzing"
+msgstr "🔄 در حال تحلیل {symbol}..."
+
+msgid "fetching_data"
+msgstr "⏳ دریافت اطلاعات..."
+
+msgid "can_use_other_commands"
+msgstr "💡 می‌توانید از دستورات دیگر استفاده کنید"
+
+msgid "deep_thinking"
+msgstr "🧠 {reason}\n⏳ در حال تحلیل عمیق..."
+
+msgid "deep_thinking_badge"
+msgstr "\n\n🧠 <b>تحلیل عمیق استفاده شد</b>\n<i>{reason}</i>"
+
+msgid "select_crypto"
+msgstr "📊 <b>لطفاً یک ارز دیجیتال را انتخاب کنید:</b>"
+
+msgid "refreshing"
+msgstr "🔄 در حال بروزرسانی {symbol}..."
+
+# ============================================
+# SIGNAL TYPES
+# ============================================
+
+msgid "signal_long"
+msgstr "خرید (لانگ)"
+
+msgid "signal_short"
+msgstr "فروش (شورت)"
+
+msgid "signal_no_trade"
+msgstr "بدون معامله"
+
+msgid "signal_buy"
+msgstr "خرید"
+
+msgid "signal_sell"
+msgstr "فروش"
+
+msgid "signal_hold"
+msgstr "نگهداری"
+
+# ============================================
+# POSITION DETAILS
+# ============================================
+
+msgid "current_price"
+msgstr "💰 <b>قیمت فعلی:</b>"
+
+msgid "time"
+msgstr "⏰ <b>زمان:</b>"
+
+msgid "trading_signal"
+msgstr "<b>🎯 سیگنال معاملاتی</b>"
+
+msgid "signal"
+msgstr "<b>سیگنال:</b>"
+
+msgid "signal_grade"
+msgstr "<b>درجه سیگنال:</b>"
+
+msgid "strategy_type"
+msgstr "<b>نوع استراتژی:</b>"
+
+msgid "market_context"
+msgstr "<b>📊 زمینه بازار</b>"
+
+msgid "htf_bias"
+msgstr "<b>گرایش HTF:</b>"
+
+msgid "primary_driver"
+msgstr "<b>محرک اصلی:</b>"
+
+msgid "liquidity_targets"
+msgstr "<b>🎯 اهداف نقدینگی:</b>"
+
+msgid "strategic_advantage"
+msgstr "<b>💪 مزیت استراتژیک:</b>"
+
+msgid "key_strength"
+msgstr "قدرت کلیدی"
+
+msgid "compromises"
+msgstr "معایب"
+
+msgid "overall_viability"
+msgstr "قابلیت کلی"
+
+# ============================================
+# POSITION SECTION
+# ============================================
+
+msgid "position_details"
+msgstr "<b>💼 جزئیات پوزیشن</b>"
+
+msgid "position_type"
+msgstr "<b>نوع:</b>"
+
+msgid "leverage"
+msgstr "<b>لوریج:</b>"
+
+msgid "entry_strategy"
+msgstr "<b>استراتژی ورود:</b>"
+
+msgid "entry_zone"
+msgstr "<b>🎯 ناحیه ورود:</b>"
+
+msgid "optimal"
+msgstr "بهینه"
+
+msgid "acceptable_range"
+msgstr "محدوده قابل قبول"
+
+msgid "zone_type"
+msgstr "نوع ناحیه"
+
+msgid "stop_loss"
+msgstr "<b>🛑 حد ضرر:</b>"
+
+msgid "price"
+msgstr "قیمت"
+
+msgid "distance"
+msgstr "فاصله"
+
+msgid "reasoning"
+msgstr "دلیل"
+
+msgid "take_profit"
+msgstr "<b>🎯 اهداف سود:</b>"
+
+msgid "targets"
+msgstr "اهداف"
+
+# ============================================
+# RISK METRICS
+# ============================================
+
+msgid "risk_metrics"
+msgstr "<b>⚖️ معیارهای ریسک</b>"
+
+msgid "strategic_score"
+msgstr "<b>امتیاز استراتژیک:</b>"
+
+msgid "regime_adjusted_score"
+msgstr "<b>امتیاز تنظیم رژیم:</b>"
+
+msgid "volatility_adjusted_score"
+msgstr "<b>امتیاز تنظیم نوسان:</b>"
+
+msgid "confidence"
+msgstr "<b>اطمینان:</b>"
+
+msgid "market_regime"
+msgstr "<b>🌐 رژیم بازار:</b>"
+
+msgid "regime_type"
+msgstr "نوع"
+
+msgid "volatility_state"
+msgstr "وضعیت نوسان"
+
+msgid "portfolio_impact"
+msgstr "<b>💼 تاثیر پورتفولیو:</b>"
+
+msgid "new_total_risk"
+msgstr "ریسک کل جدید"
+
+msgid "risk_utilization"
+msgstr "استفاده از ریسک"
+
+msgid "position_correlation"
+msgstr "همبستگی"
+
+msgid "key_strengths"
+msgstr "<b>✅ نقاط قوت:</b>"
+
+msgid "acknowledged_weaknesses"
+msgstr "<b>⚠️ نقاط ضعف:</b>"
+
+msgid "strategic_rationale"
+msgstr "<b>💡 منطق استراتژیک:</b>"
+
+# ============================================
+# INVALIDATION CONDITIONS
+# ============================================
+
+msgid "invalidation_conditions"
+msgstr "<b>🚫 شرایط ابطال</b>"
+
+msgid "structure_break"
+msgstr "<b>شکست ساختار:</b>"
+
+msgid "time_limit"
+msgstr "<b>محدودیت زمانی:</b>"
+
+msgid "volume_threshold"
+msgstr "<b>آستانه حجم:</b>"
+
+msgid "regime_change"
+msgstr "<b>تغییر رژیم:</b>"
+
+# ============================================
+# TRADE MANAGEMENT
+# ============================================
+
+msgid "trade_management"
+msgstr "<b>🔧 مدیریت معامله</b>"
+
+msgid "breakeven_trigger"
+msgstr "<b>سر به سر:</b>"
+
+msgid "max_trade_duration"
+msgstr "<b>حداکثر مدت:</b>"
+
+msgid "trailing_stop"
+msgstr "<b>🎯 استاپ دنباله‌دار:</b>"
+
+msgid "activate_after"
+msgstr "فعال‌سازی"
+
+msgid "trail_distance"
+msgstr "فاصله"
+
+msgid "method"
+msgstr "روش"
+
+msgid "scale_out_plan"
+msgstr "<b>📉 برنامه خروج تدریجی:</b>"
+
+msgid "contingency_plan"
+msgstr "<b>برنامه اضطراری:</b>"
+
+msgid "emergency_exit"
+msgstr "<b>خروج اضطراری:</b>"
+
+# ============================================
+# MARKET SUMMARY
+# ============================================
+
+msgid "market_summary"
+msgstr "<b>📈 خلاصه بازار</b>"
+
+msgid "trend"
+msgstr "<b>روند:</b>"
+
+msgid "persian_summary"
+msgstr "<b>📝 خلاصه فارسی</b>"
+
+msgid "entry"
+msgstr "<b>ورود:</b>"
+
+msgid "risk"
+msgstr "<b>ریسک:</b>"
+
+msgid "warning"
+msgstr "⚠️"
+
+# ============================================
+# ALERTS
+# ============================================
+
+msgid "alerts_title"
+msgstr "⚡ <b>هشدارهای قیمت شما</b>"
+
+msgid "no_alerts"
+msgstr "هشدار فعالی وجود ندارد.\nاز دستور /setalert [نماد] [قیمت] استفاده کنید"
+
+msgid "active_alerts"
+msgstr "⚡ <b>هشدارهای فعال</b>"
+
+msgid "total_alerts"
+msgstr "📊 مجموع: {count} هشدار"
+
+msgid "alert_set"
+msgstr "✅ هشدار تنظیم شد!"
+
+msgid "symbol"
+msgstr "نماد"
+
+msgid "target"
+msgstr "هدف"
+
+msgid "condition_above"
+msgstr "بالاتر از"
+
+msgid "condition_below"
+msgstr "پایین‌تر از"
+
+msgid "will_notify"
+msgstr "به شما اطلاع می‌دهم! 🔔"
+
+msgid "invalid_price"
+msgstr "❌ قیمت نامعتبر است."
+
+msgid "alert_usage"
+msgstr "⚡ نحوه استفاده: /setalert [نماد] [قیمت]\nمثال: /setalert BTC 50000"
+
+# ============================================
+# SETTINGS
+# ============================================
+
+msgid "settings_title"
+msgstr "⚙️ <b>تنظیمات شما</b>"
+
+msgid "default_timeframe"
+msgstr "📊 <b>تایم‌فریم پیش‌فرض:</b>"
+
+msgid "default_leverage"
+msgstr "⚡ <b>لوریج پیش‌فرض:</b>"
+
+msgid "risk_per_trade"
+msgstr "💰 <b>ریسک هر معامله:</b>"
+
+msgid "notifications"
+msgstr "🔔 <b>اعلان‌ها:</b>"
+
+msgid "enabled"
+msgstr "✅ فعال"
+
+msgid "disabled"
+msgstr "❌ غیرفعال"
+
+msgid "language"
+msgstr "🌐 <b>زبان:</b>"
+
+msgid "favorites"
+msgstr "⭐ <b>علاقه‌مندی‌ها:</b>"
+
+msgid "customize_settings"
+msgstr "تنظیمات را شخصی‌سازی کنید!"
+
+msgid "timeframe_changed"
+msgstr "✅ تایم‌فریم پیش‌فرض به <b>{value}</b> تغییر کرد!"
+
+msgid "leverage_changed"
+msgstr "✅ لوریج پیش‌فرض به <b>{value}x</b> تغییر کرد!"
+
+msgid "risk_changed"
+msgstr "✅ ریسک هر معامله به <b>{value}%</b> تغییر کرد!"
+
+msgid "language_changed"
+msgstr "✅ زبان به <b>{value}</b> تغییر کرد!"
+
+msgid "notifications_enabled"
+msgstr "🔔 اعلان‌ها فعال شد!"
+
+msgid "notifications_disabled"
+msgstr "🔔 اعلان‌ها غیرفعال شد!"
+
+msgid "select_timeframe"
+msgstr "📊 <b>انتخاب تایم‌فریم پیش‌فرض:</b>"
+
+msgid "select_leverage"
+msgstr "⚡ <b>انتخاب لوریج پیش‌فرض:</b>"
+
+msgid "select_risk"
+msgstr "💰 <b>انتخاب ریسک هر معامله:</b>"
+
+msgid "select_language"
+msgstr "🌐 <b>انتخاب زبان:</b>"
+
+# ============================================
+# STATUS
+# ============================================
+
+msgid "status_title"
+msgstr "🟢 <b>وضعیت سیستم</b>"
+
+msgid "trading_system_online"
+msgstr "✅ سیستم معاملاتی: آنلاین"
+
+msgid "data_provider_connected"
+msgstr "✅ ارائه‌دهنده داده: متصل"
+
+msgid "ai_model_active"
+msgstr "✅ مدل هوش مصنوعی: فعال"
+
+msgid "alerts_running"
+msgstr "✅ هشدارها: در حال اجرا"
+
+msgid "bot_version"
+msgstr "🤖 نسخه ربات: 3.0.0"
+
+msgid "response_time"
+msgstr "⚡ زمان پاسخ: کمتر از 500 میلی‌ثانیه"
+
+# ============================================
+# ANALYSIS HISTORY
+# ============================================
+
+msgid "analysis_history_title"
+msgstr "📊 <b>تاریخچه تحلیل‌ها</b>"
+
+msgid "recent_analyses"
+msgstr "📊 <b>تاریخچه تحلیل‌ها (20 تحلیل اخیر)</b>"
+
+msgid "no_analyses"
+msgstr "هنوز تحلیلی ثبت نشده است."
+
+msgid "loading_history"
+msgstr "📊 در حال دریافت تاریخچه تحلیل‌ها..."
+
+msgid "loading_details"
+msgstr "📋 در حال دریافت جزئیات تحلیل..."
+
+msgid "statistics_title"
+msgstr "📈 <b>آمار کلی:</b>"
+
+msgid "total_analyses"
+msgstr "کل تحلیل‌ها"
+
+msgid "buy_signals"
+msgstr "سیگنال خرید"
+
+msgid "sell_signals"
+msgstr "سیگنال فروش"
+
+msgid "hold_signals"
+msgstr "سیگنال نگهداری"
+
+msgid "avg_confidence"
+msgstr "میانگین اطمینان"
+
+# ============================================
+# ERRORS
+# ============================================
+
+msgid "error"
+msgstr "❌ خطا"
+
+msgid "error_analysis"
+msgstr "❌ خطا در تحلیل {symbol}"
+
+msgid "error_timeout"
+msgstr "⏱ زمان انتظار تمام شد. لطفاً دوباره تلاش کنید."
+
+msgid "error_connection"
+msgstr "🌐 خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید."
+
+msgid "error_history"
+msgstr "❌ خطا در دریافت تاریخچه: {error}"
+
+msgid "error_db_not_ready"
+msgstr "❌ خطا: دیتابیس هنوز آماده نشده است."
+
+msgid "error_refresh"
+msgstr "❌ خطا در بروزرسانی {symbol}\nخطا: {error}"
+
+# ============================================
+# TRADE TYPES
+# ============================================
+
+msgid "trade_type_spot"
+msgstr "🟡 spot"
+
+msgid "trade_type_leverage"
+msgstr "⚡ leverage {leverage}x"
+
+# ============================================
+# COMMON WORDS
+# ============================================
+
+msgid "yes"
+msgstr "بله"
+
+msgid "no"
+msgstr "خیر"
+
+msgid "back"
+msgstr "بازگشت"
+
+msgid "close"
+msgstr "بستن"
+
+msgid "open"
+msgstr "باز"
+
+msgid "high"
+msgstr "بالا"
+
+msgid "low"
+msgstr "پایین"
+
+msgid "volume"
+msgstr "حجم"
+
+msgid "change"
+msgstr "تغییر"
+
+msgid "percent"
+msgstr "درصد"
+
+msgid "action"
+msgstr "عملیات"
+
+msgid "what_to_do"
+msgstr "چه کاری می‌خواهید انجام دهید؟"
+
+# ============================================
+# ADDITIONAL MESSAGES
+# ============================================
+
+msgid "refreshing_details"
+msgstr "🔄 در حال بروزرسانی جزئیات..."
+
+msgid "refreshing_with_hint"
+msgstr "🔄 در حال بروزرسانی {symbol}...\n\n💡 می‌توانید از دستورات دیگر استفاده کنید"
+
+msgid "loading_history_msg"
+msgstr "📊 در حال دریافت تاریخچه تحلیل‌ها..."
+
+msgid "loading_details_msg"
+msgstr "📋 در حال دریافت جزئیات تحلیل...\n\n💡 می‌توانید از دستورات دیگر استفاده کنید"
+
+msgid "loading_market"
+msgstr "🌍 در حال دریافت اطلاعات بازار..."
+
+msgid "loading_topmovers"
+msgstr "🚀 در حال دریافت برترین تغییرات قیمت..."
+
+msgid "error_refresh_symbol"
+msgstr "❌ خطا در بروزرسانی {symbol}\nخطا: {error}"
+
+msgid "error_unknown"
+msgstr "خطای نامشخص"
+
+msgid "error_button_processing"
+msgstr "❌ خطا در پردازش دکمه: {error}"
+
+msgid "error_getting_details"
+msgstr "❌ خطا در دریافت جزئیات: {error}"
+
+msgid "error_market_data"
+msgstr "❌ خطا در دریافت اطلاعات بازار: {error}"
+
+msgid "error_current_price"
+msgstr "⚠️ خطا در دریافت قیمت فعلی: {error}"
+
+msgid "error_ict_analysis"
+msgstr "❌ خطا در تحلیل ICT: {error}"
+
+msgid "error_smart_analysis"
+msgstr "❌ خطا در تحلیل هوشمند:\n{error}"
+
+msgid "analysis_not_found"
+msgstr "❌ تحلیل مورد نظر یافت نشد."
+
+msgid "no_targets_defined"
+msgstr "ℹ️ <b>تارگتی برای این تحلیل تعریف نشده است</b>"
+
+msgid "analysis_detail_title"
+msgstr "{emoji} {badge} <b>جزئیات تحلیل {symbol}</b>"
+
+msgid "signal_info_section"
+msgstr "<b>📊 اطلاعات سیگنال</b>"
+
+msgid "type"
+msgstr "<b>نوع:</b>"
+
+msgid "confidence_level"
+msgstr "<b>درجه اطمینان:</b>"
+
+msgid "analysis_time"
+msgstr "<b>زمان تحلیل:</b>"
+
+msgid "price_info_section"
+msgstr "<b>💰 اطلاعات قیمت</b>"
+
+msgid "analysis_price"
+msgstr "<b>قیمت تحلیل:</b>"
+
+msgid "entry_price_label"
+msgstr "<b>قیمت ورود:</b>"
+
+msgid "current_price_label"
+msgstr "<b>قیمت فعلی:</b>"
+
+msgid "stop_loss_label"
+msgstr "<b>حد ضرر:</b>"
+
+msgid "technical_analysis_section"
+msgstr "<b>🔍 تحلیل تکنیکال</b>"
+
+msgid "rsi_label"
+msgstr "<b>RSI:</b>"
+
+msgid "trend_label"
+msgstr "<b>ترند:</b>"
+
+msgid "analysis_reasoning_section"
+msgstr "<b>🧠 دلیل تحلیل</b>"
+
+msgid "market_hint"
+msgstr "💡 برای تحلیل دقیق‌تر از دستور /analyze استفاده کنید."
+
+msgid "topmovers_title"
+msgstr "🚀 <b>برترین تغییرات قیمت (24 ساعت)</b>"
+
+msgid "topmovers_coming_soon"
+msgstr "این امکان به زودی اضافه خواهد شد.\nاز دستور /analyze برای تحلیل ارزهای خاص استفاده کنید."
+
+msgid "smart_analysis_title"
+msgstr "🧠 <b>تحلیل هوشمند پیشرفته</b>"
+
+msgid "smart_analysis_preparing"
+msgstr "🔍 در حال آماده‌سازی..."
+
+msgid "smart_analysis_report"
+msgstr "🧠 <b>گزارش تحلیل هوشمند پیشرفته</b>"
+
+msgid "analyzing_ict_for"
+msgstr "📊 <b>در حال تحلیل کامل ICT برای {symbol}...</b>"
+
+msgid "ict_analysis"
+msgstr "تحلیل ICT"
+
+msgid "statistics_section"
+msgstr "<b>📈 آمار کلی:</b>"
+
+msgid "total_analyses_label"
+msgstr "کل تحلیل‌ها"
+
+msgid "buy_signals_label"
+msgstr "سیگنال خرید"
+
+msgid "sell_signals_label"
+msgstr "سیگنال فروش"
+
+msgid "hold_signals_label"
+msgstr "سیگنال نگهداری"
+
+msgid "btn_analyze_btc"
+msgstr "📊 تحلیل BTC"
+
+msgid "btn_analyze_eth"
+msgstr "📊 تحلیل ETH"
+
+msgid "btn_detail_prefix"
+msgstr "جزئیات"
+
+msgid "for_alert_set"
+msgstr "⚡ برای تنظیم هشدار: /setalert {symbol} [قیمت]"
+
+msgid "select_timeframe_msg"
+msgstr "📊 <b>انتخاب تایم‌فریم پیش‌فرض:</b>"
+
+msgid "select_leverage_msg"
+msgstr "⚡ <b>انتخاب لوریج پیش‌فرض:</b>"
+
+msgid "select_risk_msg"
+msgstr "💰 <b>انتخاب ریسک هر معامله:</b>"
+
+msgid "select_language_msg"
+msgstr "🌐 <b>انتخاب زبان / Select Language:</b>"
+
+msgid "timeframe_changed_msg"
+msgstr "✅ تایم‌فریم پیش‌فرض به <b>{value}</b> تغییر کرد!"
+
+msgid "leverage_changed_msg"
+msgstr "✅ لوریج پیش‌فرض به <b>{value}x</b> تغییر کرد!"
+
+msgid "risk_changed_msg"
+msgstr "✅ ریسک هر معامله به <b>{value}%</b> تغییر کرد!"
+
+msgid "language_changed_fa"
+msgstr "✅ زبان به <b>{lang_name}</b> تغییر کرد!"
+
+msgid "language_changed_en"
+msgstr "✅ Language changed to <b>{lang_name}</b>!"
+
+msgid "notifications_toggled"
+msgstr "🔔 اعلان‌ها {status} شد!"
+
+msgid "status_enabled"
+msgstr "فعال"
+
+msgid "status_disabled"
+msgstr "غیرفعال"
+
+msgid "error_db_not_ready"
+msgstr "❌ خطا: دیتابیس هنوز آماده نشده است."
+
+msgid "error_history"
+msgstr "❌ خطا در دریافت تاریخچه: {error}"
+
+msgid "analysis_history_title"
+msgstr "📊 <b>تاریخچه تحلیل‌ها</b>"
+
+msgid "no_analyses"
+msgstr "هنوز تحلیلی ثبت نشده است."
+
+msgid "recent_analyses"
+msgstr "📊 <b>تاریخچه تحلیل‌ها (20 تحلیل اخیر)</b>"
+
+msgid "avg_confidence"
+msgstr "میانگین اطمینان"
+
+msgid "targets"
+msgstr "تارگت"
+
+msgid "btn_refresh_detail"
+msgstr "🔄 بروزرسانی"
+
+msgid "btn_back_to_history"
+msgstr "🔙 بازگشت به تاریخچه"

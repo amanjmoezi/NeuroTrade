@@ -1,0 +1,835 @@
+# English translations for Trading Bot.
+# Copyright (C) 2024
+# This file is distributed under the same license as the Trading Bot package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Trading Bot 3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-27 11:55+0330\n"
+"PO-Revision-Date: 2024-10-27 11:55+0330\n"
+"Last-Translator: \n"
+"Language: en\n"
+"Language-Team: English\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.0\n"
+
+# ============================================
+# WELCOME AND HELP MESSAGES
+# ============================================
+
+msgid "welcome_title"
+msgstr "🤖 <b>Welcome to ICT Trading Bot!</b> 🚀"
+
+msgid "welcome_greeting"
+msgstr "Hello {name}! I'm your advanced crypto trading assistant."
+
+msgid "welcome_features_title"
+msgstr "<b>🎯 Features:</b>"
+
+msgid "welcome_features"
+msgstr "• 🧠 Smart analysis with automatic coin selection\n• Real-time ICT analysis\n• Smart Money concepts\n• Price alerts\n• Trading signals\n• Beautiful charts\n• Analysis history"
+
+msgid "welcome_commands_title"
+msgstr "<b>📊 Quick Commands:</b>"
+
+msgid "welcome_ready"
+msgstr "Ready? Try the /smartanalyze command! 🧠📈"
+
+msgid "help_title"
+msgstr "📚 <b>Command Guide</b>"
+
+msgid "help_analysis_section"
+msgstr "<b>Analysis:</b>\n/analyze - Select and analyze coin\n/smartanalyze - 🧠 Smart analysis with best coin selection\n/market - Market overview\n/topmovers - Top price movers"
+
+msgid "help_history_section"
+msgstr "<b>History:</b>\n/analyses - Your analysis history"
+
+msgid "help_alerts_section"
+msgstr "<b>Alerts:</b>\n/alerts - View alerts\n/setalert [symbol] [price] - Set alert"
+
+msgid "help_settings_section"
+msgstr "<b>Settings:</b>\n/settings - Settings\n/status - System status"
+
+msgid "help_need_help"
+msgstr "Need help? Just ask! 💬"
+
+# ============================================
+# COMMANDS
+# ============================================
+
+msgid "cmd_analyze"
+msgstr "Analyze cryptocurrency"
+
+msgid "cmd_smartanalyze"
+msgstr "🧠 Smart Analysis (New!)"
+
+msgid "cmd_market"
+msgstr "Market overview"
+
+msgid "cmd_topmovers"
+msgstr "Top price movers"
+
+msgid "cmd_analyses"
+msgstr "Analysis history"
+
+msgid "cmd_alerts"
+msgstr "View alerts"
+
+msgid "cmd_setalert"
+msgstr "Set alert"
+
+msgid "cmd_settings"
+msgstr "Settings"
+
+msgid "cmd_status"
+msgstr "System status"
+
+msgid "cmd_help"
+msgstr "Complete command list"
+
+# ============================================
+# BUTTON LABELS
+# ============================================
+
+msgid "btn_smart_analysis"
+msgstr "🧠 Smart Analysis"
+
+msgid "btn_analyze_coin"
+msgstr "🔍 Analyze Coin"
+
+msgid "btn_market_overview"
+msgstr "🌍 Market Overview"
+
+msgid "btn_analysis_history"
+msgstr "📊 Analysis History"
+
+msgid "btn_my_alerts"
+msgstr "⚡ My Alerts"
+
+msgid "btn_settings"
+msgstr "⚙️ Settings"
+
+msgid "btn_set_alert"
+msgstr "🔔 Set Alert"
+
+msgid "btn_refresh"
+msgstr "🔄 Refresh"
+
+msgid "btn_details"
+msgstr "Details"
+
+# ============================================
+# ANALYSIS MESSAGES
+# ============================================
+
+msgid "analyzing"
+msgstr "🔄 Analyzing {symbol}..."
+
+msgid "fetching_data"
+msgstr "⏳ Fetching data..."
+
+msgid "can_use_other_commands"
+msgstr "💡 You can use other commands"
+
+msgid "deep_thinking"
+msgstr "🧠 {reason}\n⏳ Deep analysis in progress..."
+
+msgid "deep_thinking_badge"
+msgstr "\n\n🧠 <b>Deep Thinking Used</b>\n<i>{reason}</i>"
+
+msgid "select_crypto"
+msgstr "📊 <b>Please select a cryptocurrency:</b>"
+
+msgid "refreshing"
+msgstr "🔄 Refreshing {symbol}..."
+
+# ============================================
+# SIGNAL TYPES
+# ============================================
+
+msgid "signal_long"
+msgstr "Long"
+
+msgid "signal_short"
+msgstr "Short"
+
+msgid "signal_no_trade"
+msgstr "No Trade"
+
+msgid "signal_buy"
+msgstr "Buy"
+
+msgid "signal_sell"
+msgstr "Sell"
+
+msgid "signal_hold"
+msgstr "Hold"
+
+# ============================================
+# POSITION DETAILS
+# ============================================
+
+msgid "current_price"
+msgstr "💰 <b>Current Price:</b>"
+
+msgid "time"
+msgstr "⏰ <b>Time:</b>"
+
+msgid "trading_signal"
+msgstr "<b>🎯 Trading Signal</b>"
+
+msgid "signal"
+msgstr "<b>Signal:</b>"
+
+msgid "signal_grade"
+msgstr "<b>Signal Grade:</b>"
+
+msgid "strategy_type"
+msgstr "<b>Strategy Type:</b>"
+
+msgid "market_context"
+msgstr "<b>📊 Market Context</b>"
+
+msgid "htf_bias"
+msgstr "<b>HTF Bias:</b>"
+
+msgid "primary_driver"
+msgstr "<b>Primary Driver:</b>"
+
+msgid "liquidity_targets"
+msgstr "<b>🎯 Liquidity Targets:</b>"
+
+msgid "strategic_advantage"
+msgstr "<b>💪 Strategic Advantage:</b>"
+
+msgid "key_strength"
+msgstr "Key Strength"
+
+msgid "compromises"
+msgstr "Compromises"
+
+msgid "overall_viability"
+msgstr "Overall Viability"
+
+# ============================================
+# POSITION SECTION
+# ============================================
+
+msgid "position_details"
+msgstr "<b>💼 Position Details</b>"
+
+msgid "position_type"
+msgstr "<b>Type:</b>"
+
+msgid "leverage"
+msgstr "<b>Leverage:</b>"
+
+msgid "entry_strategy"
+msgstr "<b>Entry Strategy:</b>"
+
+msgid "entry_zone"
+msgstr "<b>🎯 Entry Zone:</b>"
+
+msgid "optimal"
+msgstr "Optimal"
+
+msgid "acceptable_range"
+msgstr "Acceptable Range"
+
+msgid "zone_type"
+msgstr "Zone Type"
+
+msgid "stop_loss"
+msgstr "<b>🛑 Stop Loss:</b>"
+
+msgid "price"
+msgstr "Price"
+
+msgid "distance"
+msgstr "Distance"
+
+msgid "reasoning"
+msgstr "Reasoning"
+
+msgid "take_profit"
+msgstr "<b>🎯 Take Profit:</b>"
+
+msgid "targets"
+msgstr "Targets"
+
+# ============================================
+# RISK METRICS
+# ============================================
+
+msgid "risk_metrics"
+msgstr "<b>⚖️ Risk Metrics</b>"
+
+msgid "strategic_score"
+msgstr "<b>Strategic Score:</b>"
+
+msgid "regime_adjusted_score"
+msgstr "<b>Regime Adjusted Score:</b>"
+
+msgid "volatility_adjusted_score"
+msgstr "<b>Volatility Adjusted Score:</b>"
+
+msgid "confidence"
+msgstr "<b>Confidence:</b>"
+
+msgid "market_regime"
+msgstr "<b>🌐 Market Regime:</b>"
+
+msgid "regime_type"
+msgstr "Type"
+
+msgid "volatility_state"
+msgstr "Volatility State"
+
+msgid "portfolio_impact"
+msgstr "<b>💼 Portfolio Impact:</b>"
+
+msgid "new_total_risk"
+msgstr "New Total Risk"
+
+msgid "risk_utilization"
+msgstr "Risk Utilization"
+
+msgid "position_correlation"
+msgstr "Position Correlation"
+
+msgid "key_strengths"
+msgstr "<b>✅ Key Strengths:</b>"
+
+msgid "acknowledged_weaknesses"
+msgstr "<b>⚠️ Acknowledged Weaknesses:</b>"
+
+msgid "strategic_rationale"
+msgstr "<b>💡 Strategic Rationale:</b>"
+
+# ============================================
+# INVALIDATION CONDITIONS
+# ============================================
+
+msgid "invalidation_conditions"
+msgstr "<b>🚫 Invalidation Conditions</b>"
+
+msgid "structure_break"
+msgstr "<b>Structure Break:</b>"
+
+msgid "time_limit"
+msgstr "<b>Time Limit:</b>"
+
+msgid "volume_threshold"
+msgstr "<b>Volume Threshold:</b>"
+
+msgid "regime_change"
+msgstr "<b>Regime Change:</b>"
+
+# ============================================
+# TRADE MANAGEMENT
+# ============================================
+
+msgid "trade_management"
+msgstr "<b>🔧 Trade Management</b>"
+
+msgid "breakeven_trigger"
+msgstr "<b>Breakeven:</b>"
+
+msgid "max_trade_duration"
+msgstr "<b>Max Duration:</b>"
+
+msgid "trailing_stop"
+msgstr "<b>🎯 Trailing Stop:</b>"
+
+msgid "activate_after"
+msgstr "Activate After"
+
+msgid "trail_distance"
+msgstr "Trail Distance"
+
+msgid "method"
+msgstr "Method"
+
+msgid "scale_out_plan"
+msgstr "<b>📉 Scale Out Plan:</b>"
+
+msgid "contingency_plan"
+msgstr "<b>Contingency Plan:</b>"
+
+msgid "emergency_exit"
+msgstr "<b>Emergency Exit:</b>"
+
+# ============================================
+# MARKET SUMMARY
+# ============================================
+
+msgid "market_summary"
+msgstr "<b>📈 Market Summary</b>"
+
+msgid "trend"
+msgstr "<b>Trend:</b>"
+
+msgid "persian_summary"
+msgstr "<b>📝 Summary</b>"
+
+msgid "entry"
+msgstr "<b>Entry:</b>"
+
+msgid "risk"
+msgstr "<b>Risk:</b>"
+
+msgid "warning"
+msgstr "⚠️"
+
+# ============================================
+# ALERTS
+# ============================================
+
+msgid "alerts_title"
+msgstr "⚡ <b>Your Price Alerts</b>"
+
+msgid "no_alerts"
+msgstr "No active alerts.\nUse /setalert [symbol] [price] to create one"
+
+msgid "active_alerts"
+msgstr "⚡ <b>Active Alerts</b>"
+
+msgid "total_alerts"
+msgstr "📊 Total: {count} alerts"
+
+msgid "alert_set"
+msgstr "✅ Alert set!"
+
+msgid "symbol"
+msgstr "Symbol"
+
+msgid "target"
+msgstr "Target"
+
+msgid "condition_above"
+msgstr "above"
+
+msgid "condition_below"
+msgstr "below"
+
+msgid "will_notify"
+msgstr "I'll notify you! 🔔"
+
+msgid "invalid_price"
+msgstr "❌ Invalid price."
+
+msgid "alert_usage"
+msgstr "⚡ Usage: /setalert [symbol] [price]\nExample: /setalert BTC 50000"
+
+# ============================================
+# SETTINGS
+# ============================================
+
+msgid "settings_title"
+msgstr "⚙️ <b>Your Settings</b>"
+
+msgid "default_timeframe"
+msgstr "📊 <b>Default Timeframe:</b>"
+
+msgid "default_leverage"
+msgstr "⚡ <b>Default Leverage:</b>"
+
+msgid "risk_per_trade"
+msgstr "💰 <b>Risk Per Trade:</b>"
+
+msgid "notifications"
+msgstr "🔔 <b>Notifications:</b>"
+
+msgid "enabled"
+msgstr "✅ Enabled"
+
+msgid "disabled"
+msgstr "❌ Disabled"
+
+msgid "language"
+msgstr "🌐 <b>Language:</b>"
+
+msgid "favorites"
+msgstr "⭐ <b>Favorites:</b>"
+
+msgid "customize_settings"
+msgstr "Customize your settings!"
+
+msgid "timeframe_changed"
+msgstr "✅ Default timeframe changed to <b>{value}</b>!"
+
+msgid "leverage_changed"
+msgstr "✅ Default leverage changed to <b>{value}x</b>!"
+
+msgid "risk_changed"
+msgstr "✅ Risk per trade changed to <b>{value}%</b>!"
+
+msgid "language_changed"
+msgstr "✅ Language changed to <b>{value}</b>!"
+
+msgid "notifications_enabled"
+msgstr "🔔 Notifications enabled!"
+
+msgid "notifications_disabled"
+msgstr "🔔 Notifications disabled!"
+
+msgid "select_timeframe"
+msgstr "📊 <b>Select Default Timeframe:</b>"
+
+msgid "select_leverage"
+msgstr "⚡ <b>Select Default Leverage:</b>"
+
+msgid "select_risk"
+msgstr "💰 <b>Select Risk Per Trade:</b>"
+
+msgid "select_language"
+msgstr "🌐 <b>Select Language:</b>"
+
+# ============================================
+# STATUS
+# ============================================
+
+msgid "status_title"
+msgstr "🟢 <b>System Status</b>"
+
+msgid "trading_system_online"
+msgstr "✅ Trading System: Online"
+
+msgid "data_provider_connected"
+msgstr "✅ Data Provider: Connected"
+
+msgid "ai_model_active"
+msgstr "✅ AI Model: Active"
+
+msgid "alerts_running"
+msgstr "✅ Alerts: Running"
+
+msgid "bot_version"
+msgstr "🤖 Bot Version: 3.0.0"
+
+msgid "response_time"
+msgstr "⚡ Response Time: <500ms"
+
+# ============================================
+# ANALYSIS HISTORY
+# ============================================
+
+msgid "analysis_history_title"
+msgstr "📊 <b>Analysis History</b>"
+
+msgid "recent_analyses"
+msgstr "📊 <b>Analysis History (Last 20)</b>"
+
+msgid "no_analyses"
+msgstr "No analyses recorded yet."
+
+msgid "loading_history"
+msgstr "📊 Loading analysis history..."
+
+msgid "loading_details"
+msgstr "📋 Loading analysis details..."
+
+msgid "statistics_title"
+msgstr "📈 <b>Overall Statistics:</b>"
+
+msgid "total_analyses"
+msgstr "Total Analyses"
+
+msgid "buy_signals"
+msgstr "Buy Signals"
+
+msgid "sell_signals"
+msgstr "Sell Signals"
+
+msgid "hold_signals"
+msgstr "Hold Signals"
+
+msgid "avg_confidence"
+msgstr "Average Confidence"
+
+# ============================================
+# ERRORS
+# ============================================
+
+msgid "error"
+msgstr "❌ Error"
+
+msgid "error_analysis"
+msgstr "❌ Error analyzing {symbol}"
+
+msgid "error_timeout"
+msgstr "⏱ Request timed out. Please try again."
+
+msgid "error_connection"
+msgstr "🌐 Connection error. Please check your internet connection."
+
+msgid "error_history"
+msgstr "❌ Error loading history: {error}"
+
+msgid "error_db_not_ready"
+msgstr "❌ Error: Database not ready yet."
+
+msgid "error_refresh"
+msgstr "❌ Error refreshing {symbol}\nError: {error}"
+
+# ============================================
+# TRADE TYPES
+# ============================================
+
+msgid "trade_type_spot"
+msgstr "🟡 spot"
+
+msgid "trade_type_leverage"
+msgstr "⚡ leverage {leverage}x"
+
+# ============================================
+# COMMON WORDS
+# ============================================
+
+msgid "yes"
+msgstr "Yes"
+
+msgid "no"
+msgstr "No"
+
+msgid "back"
+msgstr "Back"
+
+msgid "close"
+msgstr "Close"
+
+msgid "open"
+msgstr "Open"
+
+msgid "high"
+msgstr "High"
+
+msgid "low"
+msgstr "Low"
+
+msgid "volume"
+msgstr "Volume"
+
+msgid "change"
+msgstr "Change"
+
+msgid "percent"
+msgstr "Percent"
+
+msgid "action"
+msgstr "Action"
+
+msgid "what_to_do"
+msgstr "What would you like to do?"
+
+# ============================================
+# ADDITIONAL MESSAGES
+# ============================================
+
+msgid "refreshing_details"
+msgstr "🔄 Refreshing details..."
+
+msgid "refreshing_with_hint"
+msgstr "🔄 Refreshing {symbol}...\n\n💡 You can use other commands"
+
+msgid "loading_history_msg"
+msgstr "📊 Loading analysis history..."
+
+msgid "loading_details_msg"
+msgstr "📋 Loading analysis details...\n\n💡 You can use other commands"
+
+msgid "loading_market"
+msgstr "🌍 Loading market data..."
+
+msgid "loading_topmovers"
+msgstr "🚀 Loading top movers..."
+
+msgid "error_refresh_symbol"
+msgstr "❌ Error refreshing {symbol}\nError: {error}"
+
+msgid "error_unknown"
+msgstr "Unknown error"
+
+msgid "error_button_processing"
+msgstr "❌ Error processing button: {error}"
+
+msgid "error_getting_details"
+msgstr "❌ Error getting details: {error}"
+
+msgid "error_market_data"
+msgstr "❌ Error getting market data: {error}"
+
+msgid "error_current_price"
+msgstr "⚠️ Error getting current price: {error}"
+
+msgid "error_ict_analysis"
+msgstr "❌ Error in ICT analysis: {error}"
+
+msgid "error_smart_analysis"
+msgstr "❌ Error in smart analysis:\n{error}"
+
+msgid "analysis_not_found"
+msgstr "❌ Analysis not found."
+
+msgid "no_targets_defined"
+msgstr "ℹ️ <b>No targets defined for this analysis</b>"
+
+msgid "analysis_detail_title"
+msgstr "{emoji} {badge} <b>Analysis Details for {symbol}</b>"
+
+msgid "signal_info_section"
+msgstr "<b>📊 Signal Information</b>"
+
+msgid "type"
+msgstr "<b>Type:</b>"
+
+msgid "confidence_level"
+msgstr "<b>Confidence Level:</b>"
+
+msgid "analysis_time"
+msgstr "<b>Analysis Time:</b>"
+
+msgid "price_info_section"
+msgstr "<b>💰 Price Information</b>"
+
+msgid "analysis_price"
+msgstr "<b>Analysis Price:</b>"
+
+msgid "entry_price_label"
+msgstr "<b>Entry Price:</b>"
+
+msgid "current_price_label"
+msgstr "<b>Current Price:</b>"
+
+msgid "stop_loss_label"
+msgstr "<b>Stop Loss:</b>"
+
+msgid "technical_analysis_section"
+msgstr "<b>🔍 Technical Analysis</b>"
+
+msgid "rsi_label"
+msgstr "<b>RSI:</b>"
+
+msgid "trend_label"
+msgstr "<b>Trend:</b>"
+
+msgid "analysis_reasoning_section"
+msgstr "<b>🧠 Analysis Reasoning</b>"
+
+msgid "market_hint"
+msgstr "💡 For detailed analysis use /analyze command."
+
+msgid "topmovers_title"
+msgstr "🚀 <b>Top Price Movers (24h)</b>"
+
+msgid "topmovers_coming_soon"
+msgstr "This feature will be added soon.\nUse /analyze command to analyze specific coins."
+
+msgid "smart_analysis_title"
+msgstr "🧠 <b>Advanced Smart Analysis</b>"
+
+msgid "smart_analysis_preparing"
+msgstr "🔍 Preparing..."
+
+msgid "smart_analysis_report"
+msgstr "🧠 <b>Advanced Smart Analysis Report</b>"
+
+msgid "analyzing_ict_for"
+msgstr "📊 <b>Performing full ICT analysis for {symbol}...</b>"
+
+msgid "ict_analysis"
+msgstr "ICT Analysis"
+
+msgid "statistics_section"
+msgstr "<b>📈 Overall Statistics:</b>"
+
+msgid "total_analyses_label"
+msgstr "Total Analyses"
+
+msgid "buy_signals_label"
+msgstr "Buy Signals"
+
+msgid "sell_signals_label"
+msgstr "Sell Signals"
+
+msgid "hold_signals_label"
+msgstr "Hold Signals"
+
+msgid "btn_analyze_btc"
+msgstr "📊 Analyze BTC"
+
+msgid "btn_analyze_eth"
+msgstr "📊 Analyze ETH"
+
+msgid "btn_detail_prefix"
+msgstr "Details"
+
+msgid "for_alert_set"
+msgstr "⚡ To set alert: /setalert {symbol} [price]"
+
+msgid "select_timeframe_msg"
+msgstr "📊 <b>Select Default Timeframe:</b>"
+
+msgid "select_leverage_msg"
+msgstr "⚡ <b>Select Default Leverage:</b>"
+
+msgid "select_risk_msg"
+msgstr "💰 <b>Select Risk Per Trade:</b>"
+
+msgid "select_language_msg"
+msgstr "🌐 <b>Select Language / انتخاب زبان:</b>"
+
+msgid "timeframe_changed_msg"
+msgstr "✅ Default timeframe changed to <b>{value}</b>!"
+
+msgid "leverage_changed_msg"
+msgstr "✅ Default leverage changed to <b>{value}x</b>!"
+
+msgid "risk_changed_msg"
+msgstr "✅ Risk per trade changed to <b>{value}%</b>!"
+
+msgid "language_changed_fa"
+msgstr "✅ زبان به <b>{lang_name}</b> تغییر کرد!"
+
+msgid "language_changed_en"
+msgstr "✅ Language changed to <b>{lang_name}</b>!"
+
+msgid "notifications_toggled"
+msgstr "🔔 Notifications {status}!"
+
+msgid "status_enabled"
+msgstr "enabled"
+
+msgid "status_disabled"
+msgstr "disabled"
+
+msgid "error_db_not_ready"
+msgstr "❌ Error: Database is not ready yet."
+
+msgid "error_history"
+msgstr "❌ Error getting history: {error}"
+
+msgid "analysis_history_title"
+msgstr "📊 <b>Analysis History</b>"
+
+msgid "no_analyses"
+msgstr "No analyses recorded yet."
+
+msgid "recent_analyses"
+msgstr "📊 <b>Analysis History (Last 20 Analyses)</b>"
+
+msgid "avg_confidence"
+msgstr "Average Confidence"
+
+msgid "targets"
+msgstr "Target"
+
+msgid "btn_refresh_detail"
+msgstr "🔄 Refresh"
+
+msgid "btn_back_to_history"
+msgstr "🔙 Back to History"

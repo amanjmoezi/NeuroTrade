@@ -1,0 +1,625 @@
+# TRADING BOT TRANSLATIONS TEMPLATE
+# Copyright (C) 2024
+# This file is distributed under the same license as the Trading Bot package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Trading Bot 3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-27 11:55+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# ============================================
+# WELCOME AND HELP MESSAGES
+# ============================================
+
+msgid "welcome_title"
+msgstr ""
+
+msgid "welcome_greeting"
+msgstr ""
+
+msgid "welcome_features_title"
+msgstr ""
+
+msgid "welcome_features"
+msgstr ""
+
+msgid "welcome_commands_title"
+msgstr ""
+
+msgid "welcome_ready"
+msgstr ""
+
+msgid "help_title"
+msgstr ""
+
+msgid "help_analysis_section"
+msgstr ""
+
+msgid "help_history_section"
+msgstr ""
+
+msgid "help_alerts_section"
+msgstr ""
+
+msgid "help_settings_section"
+msgstr ""
+
+msgid "help_need_help"
+msgstr ""
+
+# ============================================
+# COMMANDS
+# ============================================
+
+msgid "cmd_analyze"
+msgstr ""
+
+msgid "cmd_smartanalyze"
+msgstr ""
+
+msgid "cmd_market"
+msgstr ""
+
+msgid "cmd_topmovers"
+msgstr ""
+
+msgid "cmd_analyses"
+msgstr ""
+
+msgid "cmd_alerts"
+msgstr ""
+
+msgid "cmd_setalert"
+msgstr ""
+
+msgid "cmd_settings"
+msgstr ""
+
+msgid "cmd_status"
+msgstr ""
+
+msgid "cmd_help"
+msgstr ""
+
+# ============================================
+# BUTTON LABELS
+# ============================================
+
+msgid "btn_smart_analysis"
+msgstr ""
+
+msgid "btn_analyze_coin"
+msgstr ""
+
+msgid "btn_market_overview"
+msgstr ""
+
+msgid "btn_analysis_history"
+msgstr ""
+
+msgid "btn_my_alerts"
+msgstr ""
+
+msgid "btn_settings"
+msgstr ""
+
+msgid "btn_set_alert"
+msgstr ""
+
+msgid "btn_refresh"
+msgstr ""
+
+msgid "btn_details"
+msgstr ""
+
+# ============================================
+# ANALYSIS MESSAGES
+# ============================================
+
+msgid "analyzing"
+msgstr ""
+
+msgid "fetching_data"
+msgstr ""
+
+msgid "can_use_other_commands"
+msgstr ""
+
+msgid "deep_thinking"
+msgstr ""
+
+msgid "deep_thinking_badge"
+msgstr ""
+
+msgid "select_crypto"
+msgstr ""
+
+msgid "refreshing"
+msgstr ""
+
+# ============================================
+# SIGNAL TYPES
+# ============================================
+
+msgid "signal_long"
+msgstr ""
+
+msgid "signal_short"
+msgstr ""
+
+msgid "signal_no_trade"
+msgstr ""
+
+msgid "signal_buy"
+msgstr ""
+
+msgid "signal_sell"
+msgstr ""
+
+msgid "signal_hold"
+msgstr ""
+
+# ============================================
+# POSITION DETAILS
+# ============================================
+
+msgid "current_price"
+msgstr ""
+
+msgid "time"
+msgstr ""
+
+msgid "trading_signal"
+msgstr ""
+
+msgid "signal"
+msgstr ""
+
+msgid "signal_grade"
+msgstr ""
+
+msgid "strategy_type"
+msgstr ""
+
+msgid "market_context"
+msgstr ""
+
+msgid "htf_bias"
+msgstr ""
+
+msgid "primary_driver"
+msgstr ""
+
+msgid "liquidity_targets"
+msgstr ""
+
+msgid "strategic_advantage"
+msgstr ""
+
+msgid "key_strength"
+msgstr ""
+
+msgid "compromises"
+msgstr ""
+
+msgid "overall_viability"
+msgstr ""
+
+# ============================================
+# POSITION SECTION
+# ============================================
+
+msgid "position_details"
+msgstr ""
+
+msgid "position_type"
+msgstr ""
+
+msgid "leverage"
+msgstr ""
+
+msgid "entry_strategy"
+msgstr ""
+
+msgid "entry_zone"
+msgstr ""
+
+msgid "optimal"
+msgstr ""
+
+msgid "acceptable_range"
+msgstr ""
+
+msgid "zone_type"
+msgstr ""
+
+msgid "stop_loss"
+msgstr ""
+
+msgid "price"
+msgstr ""
+
+msgid "distance"
+msgstr ""
+
+msgid "reasoning"
+msgstr ""
+
+msgid "take_profit"
+msgstr ""
+
+msgid "targets"
+msgstr ""
+
+# ============================================
+# RISK METRICS
+# ============================================
+
+msgid "risk_metrics"
+msgstr ""
+
+msgid "strategic_score"
+msgstr ""
+
+msgid "regime_adjusted_score"
+msgstr ""
+
+msgid "volatility_adjusted_score"
+msgstr ""
+
+msgid "confidence"
+msgstr ""
+
+msgid "market_regime"
+msgstr ""
+
+msgid "regime_type"
+msgstr ""
+
+msgid "volatility_state"
+msgstr ""
+
+msgid "portfolio_impact"
+msgstr ""
+
+msgid "new_total_risk"
+msgstr ""
+
+msgid "risk_utilization"
+msgstr ""
+
+msgid "position_correlation"
+msgstr ""
+
+msgid "key_strengths"
+msgstr ""
+
+msgid "acknowledged_weaknesses"
+msgstr ""
+
+msgid "strategic_rationale"
+msgstr ""
+
+# ============================================
+# INVALIDATION CONDITIONS
+# ============================================
+
+msgid "invalidation_conditions"
+msgstr ""
+
+msgid "structure_break"
+msgstr ""
+
+msgid "time_limit"
+msgstr ""
+
+msgid "volume_threshold"
+msgstr ""
+
+msgid "regime_change"
+msgstr ""
+
+# ============================================
+# TRADE MANAGEMENT
+# ============================================
+
+msgid "trade_management"
+msgstr ""
+
+msgid "breakeven_trigger"
+msgstr ""
+
+msgid "max_trade_duration"
+msgstr ""
+
+msgid "trailing_stop"
+msgstr ""
+
+msgid "activate_after"
+msgstr ""
+
+msgid "trail_distance"
+msgstr ""
+
+msgid "method"
+msgstr ""
+
+msgid "scale_out_plan"
+msgstr ""
+
+msgid "contingency_plan"
+msgstr ""
+
+msgid "emergency_exit"
+msgstr ""
+
+# ============================================
+# MARKET SUMMARY
+# ============================================
+
+msgid "market_summary"
+msgstr ""
+
+msgid "trend"
+msgstr ""
+
+msgid "persian_summary"
+msgstr ""
+
+msgid "entry"
+msgstr ""
+
+msgid "risk"
+msgstr ""
+
+msgid "warning"
+msgstr ""
+
+# ============================================
+# ALERTS
+# ============================================
+
+msgid "alerts_title"
+msgstr ""
+
+msgid "no_alerts"
+msgstr ""
+
+msgid "active_alerts"
+msgstr ""
+
+msgid "total_alerts"
+msgstr ""
+
+msgid "alert_set"
+msgstr ""
+
+msgid "symbol"
+msgstr ""
+
+msgid "target"
+msgstr ""
+
+msgid "condition_above"
+msgstr ""
+
+msgid "condition_below"
+msgstr ""
+
+msgid "will_notify"
+msgstr ""
+
+msgid "invalid_price"
+msgstr ""
+
+msgid "alert_usage"
+msgstr ""
+
+# ============================================
+# SETTINGS
+# ============================================
+
+msgid "settings_title"
+msgstr ""
+
+msgid "default_timeframe"
+msgstr ""
+
+msgid "default_leverage"
+msgstr ""
+
+msgid "risk_per_trade"
+msgstr ""
+
+msgid "notifications"
+msgstr ""
+
+msgid "enabled"
+msgstr ""
+
+msgid "disabled"
+msgstr ""
+
+msgid "language"
+msgstr ""
+
+msgid "favorites"
+msgstr ""
+
+msgid "customize_settings"
+msgstr ""
+
+msgid "timeframe_changed"
+msgstr ""
+
+msgid "leverage_changed"
+msgstr ""
+
+msgid "risk_changed"
+msgstr ""
+
+msgid "language_changed"
+msgstr ""
+
+msgid "notifications_enabled"
+msgstr ""
+
+msgid "notifications_disabled"
+msgstr ""
+
+msgid "select_timeframe"
+msgstr ""
+
+msgid "select_leverage"
+msgstr ""
+
+msgid "select_risk"
+msgstr ""
+
+msgid "select_language"
+msgstr ""
+
+# ============================================
+# STATUS
+# ============================================
+
+msgid "status_title"
+msgstr ""
+
+msgid "trading_system_online"
+msgstr ""
+
+msgid "data_provider_connected"
+msgstr ""
+
+msgid "ai_model_active"
+msgstr ""
+
+msgid "alerts_running"
+msgstr ""
+
+msgid "bot_version"
+msgstr ""
+
+msgid "response_time"
+msgstr ""
+
+# ============================================
+# ANALYSIS HISTORY
+# ============================================
+
+msgid "analysis_history_title"
+msgstr ""
+
+msgid "recent_analyses"
+msgstr ""
+
+msgid "no_analyses"
+msgstr ""
+
+msgid "loading_history"
+msgstr ""
+
+msgid "loading_details"
+msgstr ""
+
+msgid "statistics_title"
+msgstr ""
+
+msgid "total_analyses"
+msgstr ""
+
+msgid "buy_signals"
+msgstr ""
+
+msgid "sell_signals"
+msgstr ""
+
+msgid "hold_signals"
+msgstr ""
+
+msgid "avg_confidence"
+msgstr ""
+
+# ============================================
+# ERRORS
+# ============================================
+
+msgid "error"
+msgstr ""
+
+msgid "error_analysis"
+msgstr ""
+
+msgid "error_timeout"
+msgstr ""
+
+msgid "error_connection"
+msgstr ""
+
+msgid "error_history"
+msgstr ""
+
+msgid "error_db_not_ready"
+msgstr ""
+
+msgid "error_refresh"
+msgstr ""
+
+# ============================================
+# TRADE TYPES
+# ============================================
+
+msgid "trade_type_spot"
+msgstr ""
+
+msgid "trade_type_leverage"
+msgstr ""
+
+# ============================================
+# COMMON WORDS
+# ============================================
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "back"
+msgstr ""
+
+msgid "close"
+msgstr ""
+
+msgid "open"
+msgstr ""
+
+msgid "high"
+msgstr ""
+
+msgid "low"
+msgstr ""
+
+msgid "volume"
+msgstr ""
+
+msgid "change"
+msgstr ""
+
+msgid "percent"
+msgstr ""
+
+msgid "action"
+msgstr ""
+
+msgid "what_to_do"
+msgstr ""
